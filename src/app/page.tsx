@@ -1,28 +1,32 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { MessageCircle, BookOpen, Layers, Star, ArrowUpRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { MessageCircle, BookOpen, Layers, Star, ArrowUpRight, Compass } from "lucide-react";
 
 const WHATSAPP_NUMBER = "918340623262";
 
-// Hand-drawn arrow curving upwards directly to the navbar Catalog button
-function CatalogUpwardArrow() {
+// Upward Catalog Pointer Arrow
+function UpwardCatalogPointer() {
   return (
-    <div className="flex items-center gap-1.5 text-[#3b4f2c]">
-      <span className="font-serif italic text-xs tracking-wide text-[#2e3e23] font-semibold">
+    <div className="flex items-center gap-1.5 text-[#2d3f23]">
+      <span className="font-serif italic text-xs tracking-wide text-[#1c2916] font-semibold hidden sm:inline">
         Explore 22+ builds
       </span>
+      <span className="font-serif italic text-[11px] tracking-wide text-[#1c2916] font-semibold sm:hidden">
+        Catalog
+      </span>
       <svg
-        width="34"
-        height="34"
+        width="30"
+        height="30"
         viewBox="0 0 40 40"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="-rotate-12 animate-pulse text-[#3b4f2c]"
+        className="-rotate-12 animate-pulse text-[#354c29]"
       >
         <path d="M10 32 C 14 14, 24 10, 32 8" />
         <path d="M23 4 L33 8 L27 16" />
@@ -31,66 +35,76 @@ function CatalogUpwardArrow() {
   );
 }
 
-// Botanically accurate realistic olive leaf skeleton
-function RealisticOliveLeaf({ className = "w-10 h-16" }: { className?: string }) {
+// Detailed botanical leaf skeleton with natural venation
+function BotanicalOliveLeaf({ className = "w-10 h-16", opacity = "opacity-40" }: { className?: string; opacity?: string }) {
   return (
-    <svg viewBox="0 0 80 140" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M40 6 C22 28, 14 62, 22 96 C26 112, 34 126, 40 134 C46 126, 54 112, 58 96 C66 62, 58 28, 40 6 Z" strokeWidth="1.6" className="stroke-[#3b4f2c]/50" />
-      <path d="M40 134 Q39 70 40 6" strokeWidth="1.8" className="stroke-[#2f4023]/65" />
-      <path d="M40 118 Q30 108 24 106" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 112 Q50 102 56 100" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 98 Q28 88 20 84" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 92 Q52 82 60 78" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 76 Q26 66 18 60" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 70 Q54 60 61 54" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 54 Q28 46 22 38" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
-      <path d="M40 48 Q52 40 57 32" strokeWidth="1.1" className="stroke-[#3b4f2c]/45" />
+    <svg viewBox="0 0 80 140" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" className={`${className} ${opacity}`}>
+      <path d="M40 6 C20 28, 12 64, 20 98 C24 114, 34 128, 40 134 C46 128, 56 114, 60 98 C68 64, 60 28, 40 6 Z" strokeWidth="1.6" className="stroke-[#2d3e23]" />
+      <path d="M40 134 Q39 70 40 6" strokeWidth="1.8" className="stroke-[#1d2917]" />
+      <path d="M40 118 Q28 108 22 104" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 112 Q52 102 58 98" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 96 Q26 86 18 80" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 90 Q54 80 62 76" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 74 Q24 64 16 56" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 68 Q56 58 64 52" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 50 Q26 42 20 34" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
+      <path d="M40 44 Q54 36 60 28" strokeWidth="1.1" className="stroke-[#3a4e2d]" />
     </svg>
   );
 }
 
-const ambientLeaves = [
-  { top: "8%", left: "5%", size: "w-9 h-14 sm:w-11 sm:h-18", rotate: -28, delay: 0 },
-  { top: "14%", left: "84%", size: "w-10 h-16 sm:w-12 sm:h-20", rotate: 34, delay: 1.2 },
-  { top: "28%", left: "12%", size: "w-8 h-12 sm:w-10 sm:h-16", rotate: 18, delay: 0.7 },
-  { top: "38%", left: "86%", size: "w-9 h-14 sm:w-11 sm:h-18", rotate: -36, delay: 2.1 },
-  { top: "52%", left: "6%", size: "w-10 h-16 sm:w-12 sm:h-20", rotate: -15, delay: 1.5 },
-  { top: "66%", left: "85%", size: "w-8 h-12 sm:w-10 sm:h-16", rotate: 25, delay: 0.3 },
-  { top: "80%", left: "10%", size: "w-9 h-14 sm:w-11 sm:h-18", rotate: 42, delay: 2.5 },
-];
-
-const biomes = [
-  {
-    num: "01",
-    tag: "ENCLOSED BIOSPHERE",
-    title: "Terrarium",
-    desc: "Self-sustaining moss microclimates flourishing in sealed glass chambers with zero daily upkeep.",
-    imageSrc: "/terrarium/03.png",
-    fallback: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=700&auto=format&fit=crop&q=80",
-  },
-  {
-    num: "02",
-    tag: "DUAL-REALM WATERFALL",
-    title: "Paludarium",
-    desc: "Where living aquatic currents merge with emergent stone ledges and lush terrestrial ferns.",
-    imageSrc: "/paludarium/03.png",
-    fallback: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=700&auto=format&fit=crop&q=80",
-  },
-  {
-    num: "03",
-    tag: "SUBMERGED HARDSCAPE",
-    title: "Aquarium",
-    desc: "Japanese Iwagumi-inspired aquatic scapes carved from ancient volcanic slate and living aquatic flora.",
-    imageSrc: "/aquarium/02.png",
-    fallback: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=700&auto=format&fit=crop&q=80",
-  },
+// 12 Depth-Layered Botanical Leaves (Foreground blur, crisp midground, soft background)
+const leavesField = [
+  { top: "6%", left: "-2%", size: "w-14 h-24 sm:w-20 sm:h-32", rotate: -35, blur: "blur-[1.5px]", opacity: "opacity-35", delay: 0 },
+  { top: "10%", left: "84%", size: "w-12 h-20 sm:w-16 sm:h-28", rotate: 28, blur: "blur-0", opacity: "opacity-45", delay: 1.2 },
+  { top: "22%", left: "8%", size: "w-8 h-14 sm:w-10 sm:h-18", rotate: 15, blur: "blur-0", opacity: "opacity-40", delay: 0.5 },
+  { top: "32%", left: "90%", size: "w-10 h-16 sm:w-14 sm:h-22", rotate: -40, blur: "blur-[0.5px]", opacity: "opacity-30", delay: 2.1 },
+  { top: "45%", left: "4%", size: "w-11 h-18 sm:w-14 sm:h-24", rotate: -18, blur: "blur-0", opacity: "opacity-50", delay: 1.6 },
+  { top: "56%", left: "86%", size: "w-9 h-14 sm:w-12 sm:h-18", rotate: 32, blur: "blur-0", opacity: "opacity-45", delay: 0.8 },
+  { top: "68%", left: "-3%", size: "w-16 h-26 sm:w-20 sm:h-34", rotate: 45, blur: "blur-[2px]", opacity: "opacity-30", delay: 2.4 },
+  { top: "74%", left: "88%", size: "w-10 h-16 sm:w-12 sm:h-20", rotate: -25, blur: "blur-0", opacity: "opacity-40", delay: 1.1 },
+  { top: "86%", left: "10%", size: "w-12 h-20 sm:w-14 sm:h-24", rotate: 12, blur: "blur-[0.5px]", opacity: "opacity-35", delay: 1.9 },
+  { top: "92%", left: "80%", size: "w-8 h-12 sm:w-10 sm:h-16", rotate: -15, blur: "blur-0", opacity: "opacity-40", delay: 0.3 },
 ];
 
 export default function LivingTerrariumSite() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Master scroll progress across interactive 450vh track
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // 1. HERO JAR: Starts large (1.2) -> Diminishes down to 0.82 into the pedestal
+  const jarScale = useTransform(scrollYProgress, [0, 0.2], [1.2, 0.82]);
+  const heroTextOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  const heroTextY = useTransform(scrollYProgress, [0, 0.12], ["0%", "-30%"]);
+  const scrollCueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+
+  // Phase Tracker visibility (appears right as hero text disappears)
+  const trackerOpacity = useTransform(scrollYProgress, [0.12, 0.18], [0, 1]);
+
+  // Image Transitions (Smooth crossfade between the center jar and each biome upload)
+  const heroJarOpacity = useTransform(scrollYProgress, [0, 0.15, 0.22], [1, 1, 0]);
+  const terrariumOpacity = useTransform(scrollYProgress, [0.18, 0.25, 0.44, 0.5], [0, 1, 1, 0]);
+  const paludariumOpacity = useTransform(scrollYProgress, [0.45, 0.52, 0.7, 0.76], [0, 1, 1, 0]);
+  const aquariumOpacity = useTransform(scrollYProgress, [0.71, 0.78, 0.96, 1], [0, 1, 1, 1]);
+
+  // Text content crossfades
+  const text1Opacity = useTransform(scrollYProgress, [0.2, 0.26, 0.42, 0.48], [0, 1, 1, 0]);
+  const text2Opacity = useTransform(scrollYProgress, [0.48, 0.54, 0.68, 0.74], [0, 1, 1, 0]);
+  const text3Opacity = useTransform(scrollYProgress, [0.74, 0.8, 0.95, 1], [0, 1, 1, 1]);
+
+  // Phase Tracker active states
+  const phase1Active = useTransform(scrollYProgress, [0.18, 0.22, 0.44, 0.48], [0.3, 1, 1, 0.3]);
+  const phase2Active = useTransform(scrollYProgress, [0.45, 0.49, 0.7, 0.74], [0.3, 1, 1, 0.3]);
+  const phase3Active = useTransform(scrollYProgress, [0.71, 0.76, 0.98, 1], [0.3, 1, 1, 1]);
+
   return (
-    <div className="bg-[#172014] text-[#1c2517] h-screen overflow-y-scroll snap-y snap-mandatory font-sans selection:bg-[#3b4f2c] selection:text-[#f4f0e6]">
+    <div className="bg-[#121910] text-[#1c2517] font-sans selection:bg-[#354c29] selection:text-[#f4f0e6]">
       
-      {/* HEADER WITH PROMINENT CATALOG POINTER */}
+      {/* 1. STICKY NAVBAR WITH ARROW POINTER */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#f4f0e6]/95 backdrop-blur-md border-b border-[#ded6c4] px-3.5 sm:px-6 py-2.5 flex items-center justify-between shadow-sm">
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-full border border-[#c8bea9] bg-[#eae3d2] overflow-hidden flex items-center justify-center">
@@ -109,11 +123,9 @@ export default function LivingTerrariumSite() {
           </span>
         </Link>
 
-        {/* NAV GROUP WITH THE ARROW POINTER */}
+        {/* POINTER TO CATALOG */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <div className="hidden sm:block">
-            <CatalogUpwardArrow />
-          </div>
+          <UpwardCatalogPointer />
 
           <nav className="flex items-center gap-1.5 sm:gap-2">
             <Link
@@ -143,194 +155,171 @@ export default function LivingTerrariumSite() {
         </div>
       </header>
 
-      {/* AMBIENT FLOATING LEAVES BACKGROUND */}
+      {/* 2. DENSE MULTI-LAYER BOTANICAL LEAF FIELD */}
       <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
-        {ambientLeaves.map((leaf, index) => (
-          <div key={index} style={{ top: leaf.top, left: leaf.left }} className="absolute">
+        {leavesField.map((leaf, index) => (
+          <div key={index} style={{ top: leaf.top, left: leaf.left }} className={`absolute ${leaf.blur}`}>
             <motion.div
               animate={{
-                y: [0, -14, 0],
-                x: [0, index % 2 === 0 ? 8 : -8, 0],
-                rotate: [leaf.rotate, leaf.rotate + (index % 2 === 0 ? 10 : -10), leaf.rotate],
+                y: [0, -18, 0],
+                x: [0, index % 2 === 0 ? 10 : -10, 0],
+                rotate: [leaf.rotate, leaf.rotate + (index % 2 === 0 ? 12 : -12), leaf.rotate],
               }}
               transition={{
-                duration: 6 + (index % 3),
+                duration: 7 + (index % 4),
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: leaf.delay,
               }}
             >
-              <RealisticOliveLeaf className={leaf.size} />
+              <BotanicalOliveLeaf className={leaf.size} opacity={leaf.opacity} />
             </motion.div>
           </div>
         ))}
       </div>
 
-      {/* SLIDE 0: HERO INTRO (TIGHTLY BALANCED VERTICAL ALIGNMENT) */}
-      <section className="h-screen w-full snap-start snap-always relative bg-[#f4f0e6] flex flex-col items-center justify-center px-4 pt-14 pb-4">
-        
-        {/* MOBILE PROMINENT ARROW CALLOUT */}
-        <div className="sm:hidden absolute top-14 right-4 z-20 flex items-center gap-1 text-[#3b4f2c]">
-          <span className="font-serif italic text-[11px] text-[#24331c] font-semibold">
-            See Catalog
-          </span>
-          <svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="-rotate-12 animate-pulse text-[#3b4f2c]">
-            <path d="M10 32 C 14 14, 24 10, 32 8" />
-            <path d="M23 4 L33 8 L27 16" />
-          </svg>
-        </div>
-
-        {/* HERO CONTAINER */}
-        <div className="w-full max-w-md mx-auto my-auto flex flex-col items-center text-center z-20">
+      {/* 3. INTERACTIVE PINNED STORYTELLING CANVAS (450vh) */}
+      <div ref={containerRef} className="relative h-[450vh] bg-[#f4f0e6]">
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-between px-4 pt-16 pb-6 overflow-hidden">
           
-          {/* Top Crest Banner */}
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="h-[1px] w-6 bg-[#3b4f2c]/40" />
-            <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#3b4f2c] font-bold">
-              LIVING BIOSPHERE GALLERY
-            </span>
-            <span className="h-[1px] w-6 bg-[#3b4f2c]/40" />
-          </div>
-
-          {/* Main Title */}
-          <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[#172014] leading-[1.05] mb-2">
-            Find Peace <br />
-            <span className="italic font-normal text-[#3b4f2c]">in a jar.</span>
-          </h1>
-
-          {/* Center Stage Jar */}
-          <div className="relative w-56 h-64 sm:w-72 sm:h-80 flex items-center justify-center my-1">
-            <img
-              src="/hero-jar.png"
-              alt="Living Terrarium"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "https://images.unsplash.com/photo-1545241047-6083a3684587?w=700&auto=format&fit=crop&q=80";
-              }}
-              className="w-full h-full object-contain drop-shadow-[0_20px_35px_rgba(23,32,20,0.25)]"
-            />
-          </div>
-
-          {/* Brand Philosophy Quote on Slide 1 */}
-          <p className="font-serif italic text-xs sm:text-sm text-[#52493b] max-w-xs mt-1">
-            "Encapsulating nature’s stillness into living architecture."
-          </p>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="flex flex-col items-center gap-1 z-20 text-[#675d4d] pb-2">
-          <span className="text-[9px] font-mono uppercase tracking-widest text-[#3b4f2c] font-semibold">
-            Scroll to explore biomes
-          </span>
-          <div className="w-1.5 h-4 rounded-full bg-[#3b4f2c]/50 animate-bounce" />
-        </div>
-      </section>
-
-      {/* SLIDES 1, 2, 3: TERRARIUM (03.png), PALUDARIUM (03.png), AQUARIUM (02.png) */}
-      {biomes.map((item, idx) => (
-        <section
-          key={item.num}
-          className="h-screen w-full snap-start snap-always relative bg-[#f4f0e6] flex flex-col items-center justify-center px-4 pt-14 pb-4 border-b border-[#ded6c4]"
-        >
-          <div className="w-full max-w-md mx-auto my-auto flex flex-col items-center text-center z-20">
+          {/* TOP ARCHITECTURAL SECTION FILLER */}
+          <div className="w-full max-w-md mx-auto text-center z-20 pt-1">
             
-            {/* Category Phase Pill */}
-            <div className="mb-2">
-              <span className="text-[10px] font-mono text-[#3b4f2c] tracking-widest font-bold px-3 py-1 rounded-full bg-[#eae3d2] border border-[#d6cdbc]">
-                {item.num} / {item.tag}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#172014] mb-2">
-              {item.title}
-            </h2>
-
-            {/* Grooved Image Pedestal Frame */}
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center my-2">
-              <div className="w-full h-full rounded-3xl p-2.5 bg-[#eae3d2] border-2 border-[#3b4f2c]/30 shadow-[0_16px_36px_rgba(23,32,20,0.18)]">
-                <div className="w-full h-full rounded-2xl overflow-hidden bg-[#0c130b] flex items-center justify-center relative">
-                  <img
-                    src={item.imageSrc}
-                    alt={item.title}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = item.fallback;
-                    }}
-                    className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-700 hover:scale-105"
-                  />
-                  <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-[#172014]/85 text-[9px] font-mono text-[#f4f0e6] border border-[#3b4f2c]">
-                    Phase {item.num}
-                  </span>
-                </div>
+            {/* Slide 1 Crest (Visible in Hero) */}
+            <motion.div style={{ opacity: heroTextOpacity, y: heroTextY }} className="space-y-1">
+              <div className="flex items-center justify-center gap-2">
+                <span className="h-[1px] w-6 bg-[#354c29]/40" />
+                <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#354c29] font-bold">
+                  LIVING BOTANICAL ATELIER
+                </span>
+                <span className="h-[1px] w-6 bg-[#354c29]/40" />
               </div>
-            </div>
+              <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#172014] leading-[1.08]">
+                Find Peace <br />
+                <span className="italic font-normal text-[#354c29]">in a jar.</span>
+              </h1>
+            </motion.div>
 
-            {/* Description */}
-            <p className="text-xs sm:text-sm text-[#4f4637] leading-relaxed max-w-sm mt-1 mb-3">
-              {item.desc}
-            </p>
+            {/* REAL-TIME PHASE PILL TRACKER (Appears as you scroll into biomes) */}
+            <motion.div style={{ opacity: trackerOpacity }} className="flex items-center justify-center gap-2">
+              <motion.span
+                style={{ opacity: phase1Active }}
+                className="text-[9px] sm:text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#eae3d2] border border-[#354c29]/40 text-[#172014] font-bold"
+              >
+                01 Terrarium
+              </motion.span>
+              <span className="text-[#354c29]/30 text-xs">•</span>
+              <motion.span
+                style={{ opacity: phase2Active }}
+                className="text-[9px] sm:text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#eae3d2] border border-[#354c29]/40 text-[#172014] font-bold"
+              >
+                02 Paludarium
+              </motion.span>
+              <span className="text-[#354c29]/30 text-xs">•</span>
+              <motion.span
+                style={{ opacity: phase3Active }}
+                className="text-[9px] sm:text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#eae3d2] border border-[#354c29]/40 text-[#172014] font-bold"
+              >
+                03 Aquarium
+              </motion.span>
+            </motion.div>
+          </div>
 
-            {/* Action Link directly to that part of Catalog */}
-            <Link
-              href="/catalog"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#24331c] text-[#f4f0e6] text-xs font-mono font-bold hover:bg-[#324527] transition-all shadow-md active:scale-95"
+          {/* CENTER STAGE: THE JAR DIMINISHES & MORPHS THROUGH ALL 3 BIOMES */}
+          <div className="relative w-full max-w-sm h-[40vh] sm:h-[45vh] flex items-center justify-center my-auto z-20">
+            
+            {/* Grooved Outer Architectural Pedestal */}
+            <motion.div
+              style={{ scale: jarScale }}
+              className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-[2.5rem] p-3 bg-[#eae3d2] border-2 border-[#354c29]/35 shadow-[0_24px_50px_rgba(23,32,20,0.22)] flex items-center justify-center"
             >
-              <span>Explore {item.title}s in Catalog</span>
-              <ArrowUpRight size={13} className="text-[#a4b893]" />
-            </Link>
+              <div className="w-full h-full rounded-[2rem] overflow-hidden bg-[#0a1009] relative flex items-center justify-center">
+                
+                {/* Image 0: The Original Large Jar (diminishes and fades out) */}
+                <motion.img
+                  style={{ opacity: heroJarOpacity }}
+                  src="/hero-jar.png"
+                  alt="Living Terrarium Hero"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "https://images.unsplash.com/photo-1545241047-6083a3684587?w=700&auto=format&fit=crop&q=80";
+                  }}
+                  className="absolute inset-0 m-auto max-w-[88%] max-h-[88%] object-contain drop-shadow-xl"
+                />
+
+                {/* Image 1: Terrarium (03.png) */}
+                <motion.img
+                  style={{ opacity: terrariumOpacity }}
+                  src="/terrarium/03.png"
+                  alt="Terrarium Build 03"
+                  className="absolute inset-0 m-auto max-w-full max-h-full object-contain"
+                />
+
+                {/* Image 2: Paludarium (03.png) */}
+                <motion.img
+                  style={{ opacity: paludariumOpacity }}
+                  src="/paludarium/03.png"
+                  alt="Paludarium Build 03"
+                  className="absolute inset-0 m-auto max-w-full max-h-full object-contain"
+                />
+
+                {/* Image 3: Aquarium (02.png) */}
+                <motion.img
+                  style={{ opacity: aquariumOpacity }}
+                  src="/aquarium/02.png"
+                  alt="Aquarium Build 02"
+                  className="absolute inset-0 m-auto max-w-full max-h-full object-contain"
+                />
+
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-[#121910]/85 text-[9px] font-mono text-[#f4f0e6] border border-[#354c29]/60">
+                  Living Biome
+                </span>
+              </div>
+            </motion.div>
+
           </div>
 
-          <div className="text-[9px] font-mono text-[#786e5e] uppercase tracking-widest pb-1 z-20">
-            {idx < 2 ? "Swipe for next biome ↓" : "Swipe to commission ↓"}
-          </div>
-        </section>
-      ))}
+          {/* BOTTOM CONSOLE: NARRATIVE & CATALOG JUMP */}
+          <div className="w-full max-w-md mx-auto text-center z-20 pb-2 min-h-[140px] flex flex-col justify-center relative">
+            
+            {/* Hero Quote on Slide 1 */}
+            <motion.div style={{ opacity: heroTextOpacity }} className="space-y-2">
+              <p className="font-serif italic text-xs sm:text-sm text-[#473e31] max-w-xs mx-auto">
+                "Encapsulating nature’s stillness into living architecture."
+              </p>
+              <motion.div style={{ opacity: scrollCueOpacity }} className="flex flex-col items-center gap-1 pt-1 text-[#675d4d]">
+                <span className="text-[9px] font-mono uppercase tracking-widest text-[#354c29] font-bold">
+                  Scroll to enter journey
+                </span>
+                <div className="w-1.5 h-4 rounded-full bg-[#354c29]/50 animate-bounce" />
+              </motion.div>
+            </motion.div>
 
-      {/* SLIDE 4: DARK OLIVE CURTAIN FOOTER */}
-      <footer className="h-screen w-full snap-start snap-always relative bg-gradient-to-b from-[#1c2618] to-[#11170f] text-[#f4f0e6] px-6 py-10 flex flex-col justify-between max-w-xl mx-auto">
-        <div className="pt-8">
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#cfc5b0] block mb-1">
-            Start Your Commission
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#f4f0e6] leading-tight">
-            Bring Nature <br />
-            <span className="italic font-normal text-[#a3b793]">Into Your Space.</span>
-          </h2>
-          <p className="text-xs text-[#b8ad96] mt-3 leading-relaxed">
-            Custom vessel sizes, customized figurines, and corporate gifting available directly through WhatsApp.
-          </p>
-        </div>
+            {/* Biome 1 Details: Terrarium */}
+            <motion.div style={{ opacity: text1Opacity }} className="absolute inset-0 flex flex-col items-center justify-center">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#172014] mb-1">
+                Enclosed Terrarium
+              </h2>
+              <p className="text-xs text-[#4f4637] leading-relaxed max-w-xs mb-2.5">
+                Self-sustaining moss microclimates flourishing in sealed glass chambers with zero daily upkeep.
+              </p>
+              <Link
+                href="/catalog#terrariums"
+                className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#24331c] text-[#f4f0e6] text-xs font-mono font-bold hover:bg-[#324527] shadow-sm"
+              >
+                <span>View Terrariums in Catalog</span>
+                <ArrowUpRight size={13} className="text-[#a4b893]" />
+              </Link>
+            </motion.div>
 
-        <div className="space-y-3 my-auto">
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20would%20like%20to%20discuss%20a%20custom%20order.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full py-3.5 px-4 rounded-2xl bg-[#f4f0e6] text-[#172014] font-mono font-bold text-xs flex items-center justify-between shadow-lg hover:bg-[#eae3d2] active:scale-98 transition-transform cursor-pointer"
-          >
-            <span className="flex items-center gap-2">
-              <MessageCircle size={16} /> Direct WhatsApp Inquiry
-            </span>
-            <span>→</span>
-          </a>
-
-          <Link
-            href="/catalog"
-            className="w-full py-3.5 px-4 rounded-2xl bg-[#283622] border border-[#3e5335] text-[#f4f0e6] font-mono text-xs flex items-center justify-between hover:bg-[#32432a] active:scale-98 transition-transform"
-          >
-            <span className="flex items-center gap-2">
-              <Layers size={16} className="text-[#a4b893]" /> Browse 22-Piece Catalog
-            </span>
-            <span>→</span>
-          </Link>
-        </div>
-
-        <div className="flex items-center justify-between border-t border-[#2c3d25] pt-4 text-[10px] font-mono text-[#9f947f]">
-          <span>Living Terrarium Studio</span>
-          <span>Find peace in a jar</span>
-        </div>
-      </footer>
-
-    </div>
-  );
-}
+            {/* Biome 2 Details: Paludarium */}
+            <motion.div style={{ opacity: text2Opacity }} className="absolute inset-0 flex flex-col items-center justify-center">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#172014] mb-1">
+                Dual-Realm Paludarium
+              </h2>
+              <p className="text-xs text-[#4f4637] leading-relaxed max-w-xs mb-2.5">
+                Where living aquatic currents merge with emergent stone ledges and lush terrestrial ferns.
+              </p>
+              <Link
+                href="/catalog#paludariums"
+                className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#24331c] text-[#f4f0e6] text-xs font-mono font-bold hover:bg-[#3245

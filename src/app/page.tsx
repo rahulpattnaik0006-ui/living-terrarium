@@ -17,63 +17,84 @@ function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-function SpiralArrow() {
+// Hand-drawn spiral arrow pointing to more content
+function SpiralArrowMore() {
   return (
-    <svg width="32" height="48" viewBox="0 0 40 60" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#696254] animate-bounce">
-      <path d="M20 5 C35 5 35 20 20 20 C5 20 5 35 20 35 C35 35 35 50 20 55" />
-      <path d="M14 49 L20 55 L26 49" />
-    </svg>
+    <div className="flex flex-col items-center gap-1.5 text-[#544c3d]">
+      <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[#4d613e] font-semibold">
+        Scroll to discover more
+      </span>
+      <svg
+        width="34"
+        height="52"
+        viewBox="0 0 40 65"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-[#4d613e] animate-bounce"
+      >
+        <path d="M20 4 C34 4 36 16 22 17 C11 18 9 32 23 32 C35 32 35 46 20 54" />
+        <path d="M14 47 L20 55 L26 47" />
+      </svg>
+    </div>
   );
 }
 
-// Delicate botanical leaf skeleton with central stem, primary veins, and micro-vein branching
-function LeafSkeleton({ className = "w-16 h-24" }: { className?: string }) {
+// Delicate miniature leaf skeleton
+function MiniLeafSkeleton({ className = "w-5 h-8" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 100 160"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.2"
+      strokeWidth="1.1"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
     >
-      {/* Central spine */}
-      <path d="M50 152 Q 49 80 50 8" strokeWidth="1.8" />
-      
-      {/* Outer delicate cellular silhouette */}
+      <path d="M50 152 Q 49 80 50 8" strokeWidth="1.5" />
       <path
         d="M50 8 C 18 38 8 92 50 152 C 92 92 82 38 50 8 Z"
-        strokeWidth="1"
-        strokeDasharray="4 2.5"
+        strokeWidth="0.9"
+        strokeDasharray="3 2"
       />
-      
-      {/* Left lateral veins */}
       <path d="M50 134 Q 34 122 18 124" />
       <path d="M50 114 Q 28 98 12 98" />
       <path d="M50 94 Q 26 78 14 74" />
       <path d="M50 74 Q 28 58 20 52" />
       <path d="M50 54 Q 32 40 28 34" />
       <path d="M50 34 Q 40 24 38 20" />
-      
-      {/* Right lateral veins */}
       <path d="M50 134 Q 66 122 82 124" />
       <path d="M50 114 Q 72 98 88 98" />
       <path d="M50 94 Q 74 78 86 74" />
       <path d="M50 74 Q 72 58 80 52" />
       <path d="M50 54 Q 68 40 72 34" />
       <path d="M50 34 Q 60 24 62 20" />
-      
-      {/* Micro-capillary vein network */}
-      <path d="M34 122 Q 26 112 22 108" strokeWidth="0.7" opacity="0.65" />
-      <path d="M28 98 Q 20 88 16 84" strokeWidth="0.7" opacity="0.65" />
-      <path d="M26 78 Q 20 68 18 64" strokeWidth="0.7" opacity="0.65" />
-      <path d="M66 122 Q 74 112 78 108" strokeWidth="0.7" opacity="0.65" />
-      <path d="M72 98 Q 80 88 84 84" strokeWidth="0.7" opacity="0.65" />
-      <path d="M74 78 Q 80 68 82 64" strokeWidth="0.7" opacity="0.65" />
     </svg>
   );
 }
+
+// Scattered field of tiny leaves
+const ambientLeaves = [
+  { top: "8%", left: "6%", size: "w-5 h-8", rotate: -25, delay: 0.2, duration: 6 },
+  { top: "12%", left: "84%", size: "w-6 h-9", rotate: 32, delay: 1.1, duration: 7.5 },
+  { top: "18%", left: "20%", size: "w-4 h-6", rotate: 48, delay: 1.9, duration: 5.8 },
+  { top: "22%", left: "10%", size: "w-5 h-7", rotate: 15, delay: 2.3, duration: 5.5 },
+  { top: "25%", left: "74%", size: "w-5 h-8", rotate: -35, delay: 0.4, duration: 7.0 },
+  { top: "29%", left: "92%", size: "w-4 h-6", rotate: -40, delay: 0.8, duration: 8 },
+  { top: "36%", left: "5%", size: "w-6 h-10", rotate: 42, delay: 1.7, duration: 6.8 },
+  { top: "42%", left: "88%", size: "w-4 h-6", rotate: -15, delay: 3.1, duration: 5.2 },
+  { top: "48%", left: "12%", size: "w-5 h-8", rotate: 22, delay: 0.5, duration: 7.2 },
+  { top: "54%", left: "82%", size: "w-6 h-9", rotate: -28, delay: 2.0, duration: 6.4 },
+  { top: "62%", left: "7%", size: "w-4 h-6", rotate: -12, delay: 1.4, duration: 8.5 },
+  { top: "68%", left: "91%", size: "w-5 h-8", rotate: 35, delay: 2.8, duration: 5.9 },
+  { top: "72%", left: "24%", size: "w-5 h-7", rotate: 12, delay: 2.5, duration: 6.5 },
+  { top: "76%", left: "14%", size: "w-6 h-9", rotate: -18, delay: 0.9, duration: 7.8 },
+  { top: "80%", left: "76%", size: "w-4 h-6", rotate: -44, delay: 1.2, duration: 8.0 },
+  { top: "84%", left: "86%", size: "w-5 h-7", rotate: 26, delay: 3.4, duration: 6.1 },
+];
 
 const reviews = [
   {
@@ -97,38 +118,30 @@ export default function LivingTerrariumSite() {
   const heroTrackRef = useRef<HTMLDivElement>(null);
   const reviewsRef = useRef<HTMLDivElement>(null);
 
-  // 300vh track for focused vertical storytelling
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroTrackRef,
     offset: ["start start", "end end"],
   });
 
-  // 1. MAIN TITLE: Vanishes immediately
+  // Main title fades early on scroll
   const titleOpacity = useTransform(heroProgress, [0, 0.05], [1, 0]);
-  const scrollHintOpacity = useTransform(heroProgress, [0, 0.1], [1, 0]);
+  const scrollHintOpacity = useTransform(heroProgress, [0, 0.08], [1, 0]);
 
-  // 2. THE JAR: Stays centered, shrinks slightly, moves UP to make room for text
+  // Jar stays centered, slightly compresses and moves upward to make space for topics
   const jarScale = useTransform(heroProgress, [0, 0.15], [1.1, 0.85]);
   const jarY = useTransform(heroProgress, [0, 0.15], ["10%", "-15%"]);
-  
-  // Parallax drifts for leaf skeletons on scroll
-  const leafScrollY1 = useTransform(heroProgress, [0, 1], [0, -180]);
-  const leafScrollY2 = useTransform(heroProgress, [0, 1], [0, -120]);
-  const leafScrollY3 = useTransform(heroProgress, [0, 1], [0, -220]);
 
-  // 3. TOPIC 1: TERRARIUM (Centered below jar)
+  // Sequential topics revealed below the jar
   const topic1Opacity = useTransform(heroProgress, [0.15, 0.25, 0.35, 0.40], [0, 1, 1, 0]);
   const topic1Y = useTransform(heroProgress, [0.15, 0.25, 0.35, 0.40], ["30px", "0px", "0px", "-30px"]);
 
-  // 4. TOPIC 2: PALUDARIUM
   const topic2Opacity = useTransform(heroProgress, [0.45, 0.55, 0.65, 0.70], [0, 1, 1, 0]);
   const topic2Y = useTransform(heroProgress, [0.45, 0.55, 0.65, 0.70], ["30px", "0px", "0px", "-30px"]);
 
-  // 5. TOPIC 3: AQUARIUM
   const topic3Opacity = useTransform(heroProgress, [0.75, 0.85, 0.95, 1], [0, 1, 1, 0]);
   const topic3Y = useTransform(heroProgress, [0.75, 0.85, 0.95, 1], ["30px", "0px", "0px", "-30px"]);
 
-  // Review parallax
+  // Reviews section scroll parallax
   const { scrollYProgress: reviewScroll } = useScroll({
     target: reviewsRef,
     offset: ["start end", "end start"],
@@ -143,7 +156,7 @@ export default function LivingTerrariumSite() {
       {/* Scrollable Beige Curtain Layer */}
       <div className="relative z-10 bg-[#f4f0e6] shadow-[0_30px_70px_rgba(20,28,18,0.22)] mb-[400px] sm:mb-[360px] pb-16 border-b border-[#ded6c4]">
         
-        {/* Sticky Multi-Page Navbar */}
+        {/* Sticky Navbar */}
         <header className="sticky top-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b border-[#ded6c4] px-4 sm:px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full border border-[#c8bea9] bg-[#eae3d2] overflow-hidden flex items-center justify-center">
@@ -172,106 +185,38 @@ export default function LivingTerrariumSite() {
           </nav>
         </header>
 
-        {/* SECTION 1: CENTERED STORYTELLING HERO WITH FLOATING LEAF SKELETONS */}
+        {/* SECTION 1: STORYTELLING HERO WITH DENSE AMBIENT SKELETON LEAVES */}
         <section ref={heroTrackRef} className="relative h-[300vh]">
           <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-4">
             
             <div className="absolute w-80 h-80 rounded-full bg-[#495b3b]/12 blur-[120px] pointer-events-none -top-10" />
 
-            {/* FLOATING LEAF SKELETONS BACKGROUND LAYER */}
+            {/* FIELD OF TINY FLOATING LEAF SKELETONS */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-              
-              {/* Leaf 1: Top Left - slow gentle drift */}
-              <motion.div
-                style={{ y: leafScrollY1 }}
-                className="absolute top-[14%] -left-4 sm:left-12"
-              >
-                <motion.div
-                  animate={{
-                    y: [0, -18, 0],
-                    x: [0, 10, 0],
-                    rotate: [-14, -6, -14],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="text-[#495b3b]/25"
+              {ambientLeaves.map((leaf, index) => (
+                <div
+                  key={index}
+                  style={{ top: leaf.top, left: leaf.left }}
+                  className="absolute"
                 >
-                  <LeafSkeleton className="w-20 h-32 sm:w-28 sm:h-44" />
-                </motion.div>
-              </motion.div>
-
-              {/* Leaf 2: Top Right - floating counter-tilt */}
-              <motion.div
-                style={{ y: leafScrollY2 }}
-                className="absolute top-[22%] -right-5 sm:right-16"
-              >
-                <motion.div
-                  animate={{
-                    y: [0, 20, 0],
-                    x: [0, -12, 0],
-                    rotate: [28, 38, 28],
-                  }}
-                  transition={{
-                    duration: 10,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1,
-                  }}
-                  className="text-[#495b3b]/20"
-                >
-                  <LeafSkeleton className="w-24 h-36 sm:w-32 sm:h-48" />
-                </motion.div>
-              </motion.div>
-
-              {/* Leaf 3: Mid-Lower Left - subtle small vein skeleton */}
-              <motion.div
-                style={{ y: leafScrollY3 }}
-                className="absolute bottom-[24%] left-3 sm:left-24"
-              >
-                <motion.div
-                  animate={{
-                    y: [0, -14, 0],
-                    x: [0, 8, 0],
-                    rotate: [12, 22, 12],
-                  }}
-                  transition={{
-                    duration: 7.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.5,
-                  }}
-                  className="text-[#3a4b30]/20"
-                >
-                  <LeafSkeleton className="w-16 h-24 sm:w-20 sm:h-32" />
-                </motion.div>
-              </motion.div>
-
-              {/* Leaf 4: Bottom Right - gentle sway behind topics */}
-              <motion.div
-                style={{ y: leafScrollY1 }}
-                className="absolute bottom-[18%] right-2 sm:right-28"
-              >
-                <motion.div
-                  animate={{
-                    y: [0, 16, 0],
-                    x: [0, -8, 0],
-                    rotate: [-35, -24, -35],
-                  }}
-                  transition={{
-                    duration: 9,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 2,
-                  }}
-                  className="text-[#495b3b]/25"
-                >
-                  <LeafSkeleton className="w-18 h-28 sm:w-24 sm:h-36" />
-                </motion.div>
-              </motion.div>
-
+                  <motion.div
+                    animate={{
+                      y: [0, -12, 0],
+                      x: [0, index % 2 === 0 ? 6 : -6, 0],
+                      rotate: [leaf.rotate, leaf.rotate + (index % 2 === 0 ? 8 : -8), leaf.rotate],
+                    }}
+                    transition={{
+                      duration: leaf.duration,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: leaf.delay,
+                    }}
+                    className="text-[#3c4f2e]/20"
+                  >
+                    <MiniLeafSkeleton className={leaf.size} />
+                  </motion.div>
+                </div>
+              ))}
             </div>
 
             {/* Main Title: Fades out immediately on scroll */}
@@ -288,7 +233,7 @@ export default function LivingTerrariumSite() {
               </h1>
             </motion.div>
 
-            {/* The Jar: Center staged, moves UP slightly on scroll */}
+            {/* The Jar: Center staged */}
             <motion.div
               style={{ scale: jarScale, y: jarY }}
               className="relative z-10 w-72 h-80 sm:w-96 sm:h-[400px] flex items-center justify-center pointer-events-none mt-10"
@@ -301,7 +246,7 @@ export default function LivingTerrariumSite() {
               />
             </motion.div>
 
-            {/* Topics: Fade in beneath the jar, taking full width */}
+            {/* Topics: Centered below jar */}
             <div className="absolute top-[65%] sm:top-[70%] left-0 right-0 mx-auto px-6 w-full max-w-md text-center pointer-events-none z-10">
               
               <motion.div style={{ opacity: topic1Opacity, y: topic1Y, position: "absolute", left: 0, right: 0 }}>
@@ -324,13 +269,12 @@ export default function LivingTerrariumSite() {
 
             </div>
 
-            {/* Spiral Scroll Indicator */}
+            {/* Spiral Scroll Guide: Scroll to discover more */}
             <motion.div
               style={{ opacity: scrollHintOpacity }} 
-              className="absolute bottom-6 flex flex-col items-center gap-2 z-10"
+              className="absolute bottom-5 flex flex-col items-center z-10"
             >
-              <span className="text-[9px] font-mono uppercase tracking-widest text-[#787163]">Scroll</span>
-              <SpiralArrow />
+              <SpiralArrowMore />
             </motion.div>
           </div>
         </section>

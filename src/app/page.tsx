@@ -90,31 +90,39 @@ export default function LivingTerrariumSite() {
   const heroTrackRef = useRef<HTMLDivElement>(null);
   const reviewsRef = useRef<HTMLDivElement>(null);
 
-  // Pinned Hero Scroll Progress (tracks across 220vh track)
+  // 400vh track for a long, buttery smooth scroll story
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroTrackRef,
     offset: ["start start", "end end"],
   });
 
-  // Jar: Starts prominent (1.1x), diminishes down to 0.45x, and fades out cleanly
-  const jarScale = useTransform(heroProgress, [0, 0.7], [1.1, 0.45]);
-  const jarOpacity = useTransform(heroProgress, [0.4, 0.75], [1, 0]);
-  const jarY = useTransform(heroProgress, [0, 0.7], ["0%", "18%"]);
+  // 1. MAIN TITLE: Vanishes immediately (0 to 0.05) so it never overlaps the jar
+  const titleOpacity = useTransform(heroProgress, [0, 0.05], [1, 0]);
+  const titleY = useTransform(heroProgress, [0, 0.05], ["0%", "-20%"]);
 
-  // Typography: Starts modest (0.85x), scales UP into a large bold statement (1.45x)
-  const textScale = useTransform(heroProgress, [0, 0.75], [0.85, 1.45]);
-  const textOpacity = useTransform(heroProgress, [0, 0.15, 0.8, 0.95], [0.85, 1, 1, 0.1]);
-  const textY = useTransform(heroProgress, [0, 0.75], ["0%", "-12%"]);
+  // 2. THE JAR: Moves to the left (-28vw) and shrinks (0.65x) to make room for words
+  const jarX = useTransform(heroProgress, [0, 0.15], ["0vw", "-28vw"]);
+  const jarScale = useTransform(heroProgress, [0, 0.15], [1.1, 0.65]);
+  const jarY = useTransform(heroProgress, [0, 0.15], ["0%", "5%"]);
+  const jarOpacity = useTransform(heroProgress, [0.85, 0.95], [1, 0]); // Fades out at the very end
 
-  // Scroll prompt indicator fades away on initial scroll
-  const hintOpacity = useTransform(heroProgress, [0, 0.18], [1, 0]);
+  // 3. TOPIC 1: TERRARIUM
+  const topic1Opacity = useTransform(heroProgress, [0.15, 0.22, 0.32, 0.38], [0, 1, 1, 0]);
+  const topic1Y = useTransform(heroProgress, [0.15, 0.22, 0.32, 0.38], ["20px", "0px", "0px", "-20px"]);
+
+  // 4. TOPIC 2: PALUDARIUM
+  const topic2Opacity = useTransform(heroProgress, [0.4, 0.47, 0.57, 0.63], [0, 1, 1, 0]);
+  const topic2Y = useTransform(heroProgress, [0.4, 0.47, 0.57, 0.63], ["20px", "0px", "0px", "-20px"]);
+
+  // 5. TOPIC 3: AQUARIUM
+  const topic3Opacity = useTransform(heroProgress, [0.65, 0.72, 0.82, 0.88], [0, 1, 1, 0]);
+  const topic3Y = useTransform(heroProgress, [0.65, 0.72, 0.82, 0.88], ["20px", "0px", "0px", "-20px"]);
 
   // Review parallax
   const { scrollYProgress: reviewScroll } = useScroll({
     target: reviewsRef,
     offset: ["start end", "end start"],
   });
-
   const card1Y = useTransform(reviewScroll, [0, 1], [30, -30]);
   const card2Y = useTransform(reviewScroll, [0, 1], [60, -60]);
   const card3Y = useTransform(reviewScroll, [0, 1], [20, -20]);
@@ -133,8 +141,7 @@ export default function LivingTerrariumSite() {
                 src="/logo.png"
                 alt="Living Terrarium"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "https://images.unsplash.com/photo-1545241047-6083a3684587?w=120&auto=format&fit=crop&q=80";
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1545241047-6083a3684587?w=120&auto=format&fit=crop&q=80";
                 }}
                 className="w-full h-full object-cover"
               />
@@ -151,7 +158,7 @@ export default function LivingTerrariumSite() {
               className="text-[11px] font-mono px-2.5 py-1.5 rounded-lg text-[#32432b] hover:bg-[#eae3d2] transition-colors flex items-center gap-1 font-semibold"
             >
               <Layers size={13} />
-              <span>Catalog</span>
+              <span className="hidden sm:inline">Catalog</span>
             </Link>
 
             <Link
@@ -159,7 +166,7 @@ export default function LivingTerrariumSite() {
               className="text-[11px] font-mono px-2.5 py-1.5 rounded-lg text-[#32432b] hover:bg-[#eae3d2] transition-colors flex items-center gap-1 font-semibold"
             >
               <BookOpen size={13} />
-              <span>Care Guide</span>
+              <span className="hidden sm:inline">Care Guide</span>
             </Link>
 
             <a
@@ -174,16 +181,16 @@ export default function LivingTerrariumSite() {
           </nav>
         </header>
 
-        {/* SECTION 1: PINNED 3D HERO SCROLL */}
-        <section ref={heroTrackRef} className="relative h-[220vh]">
+        {/* SECTION 1: STORYTELLING HERO SCROLL (400vh tall) */}
+        <section ref={heroTrackRef} className="relative h-[400vh]">
           <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-4">
             
             <div className="absolute w-80 h-80 rounded-full bg-[#495b3b]/12 blur-[120px] pointer-events-none -top-10" />
 
-            {/* Typography: Scales UP into focus without being covered */}
+            {/* Main Title: Placed HIGH up, fades out instantly */}
             <motion.div
-              style={{ scale: textScale, opacity: textOpacity, y: textY }}
-              className="z-10 text-center select-none max-w-lg mb-4"
+              style={{ opacity: titleOpacity, y: titleY }}
+              className="absolute top-[12%] sm:top-[18%] z-0 text-center px-4 w-full"
             >
               <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#4d613e] font-semibold block mb-2">
                 Bespoke Miniature Ecosystems
@@ -194,29 +201,54 @@ export default function LivingTerrariumSite() {
               </h1>
             </motion.div>
 
-            {/* Jar: Cleanly positioned below title; DIMINISHES as you scroll */}
+            {/* The Jar: Shrinks and moves to the left */}
             <motion.div
-              style={{ scale: jarScale, opacity: jarOpacity, y: jarY }}
-              className="z-20 w-60 h-72 sm:w-72 sm:h-84 flex items-center justify-center pointer-events-none"
+              style={{ x: jarX, scale: jarScale, y: jarY, opacity: jarOpacity }}
+              className="relative z-10 w-72 h-80 sm:w-80 sm:h-96 flex items-center justify-center pointer-events-none mt-16 sm:mt-24"
             >
               <img
                 src="/hero-jar.png"
                 alt="Living Terrarium"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&auto=format&fit=crop&q=80";
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&auto=format&fit=crop&q=80";
                 }}
                 className="w-full h-full object-contain drop-shadow-[0_20px_35px_rgba(35,46,29,0.22)]"
               />
             </motion.div>
 
+            {/* Topics: Fixed on the right side of the screen */}
+            <div className="absolute right-[5%] sm:right-[15%] top-1/2 -translate-y-1/2 w-[55%] sm:w-[40%] max-w-[280px] h-[150px] pointer-events-none">
+              
+              {/* 1. Terrarium */}
+              <motion.div style={{ opacity: topic1Opacity, y: topic1Y }} className="absolute inset-0 flex flex-col justify-center">
+                <span className="text-[10px] font-mono text-[#4d613e] mb-1">01 / ENCLOSED</span>
+                <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#172014] mb-2">Terrarium</h2>
+                <p className="text-[11px] sm:text-sm text-[#5c5445] leading-relaxed">Self-sustaining glass ecosystems that thrive on neglect.</p>
+              </motion.div>
+
+              {/* 2. Paludarium */}
+              <motion.div style={{ opacity: topic2Opacity, y: topic2Y }} className="absolute inset-0 flex flex-col justify-center">
+                <span className="text-[10px] font-mono text-[#4d613e] mb-1">02 / DUAL-REALM</span>
+                <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#172014] mb-2">Paludarium</h2>
+                <p className="text-[11px] sm:text-sm text-[#5c5445] leading-relaxed">Waterfalls merging seamlessly with lush land moss.</p>
+              </motion.div>
+
+              {/* 3. Aquarium */}
+              <motion.div style={{ opacity: topic3Opacity, y: topic3Y }} className="absolute inset-0 flex flex-col justify-center">
+                <span className="text-[10px] font-mono text-[#4d613e] mb-1">03 / SUBMERGED</span>
+                <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#172014] mb-2">Aquarium</h2>
+                <p className="text-[11px] sm:text-sm text-[#5c5445] leading-relaxed">Aquascapes featuring raw Iwagumi stones and aquatic flora.</p>
+              </motion.div>
+
+            </div>
+
             {/* Scroll Indicator */}
             <motion.div
-              style={{ opacity: hintOpacity }}
+              style={{ opacity: titleOpacity }} 
               className="absolute bottom-6 flex flex-col items-center gap-1.5"
             >
               <span className="text-[9px] font-mono uppercase tracking-widest text-[#787163]">
-                Scroll down to enter
+                Scroll to explore
               </span>
               <div className="w-1 h-5 rounded-full bg-[#394a2e]/60 animate-pulse" />
             </motion.div>

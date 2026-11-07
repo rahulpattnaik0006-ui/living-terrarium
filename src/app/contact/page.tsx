@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Phone, ArrowRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 
 const PHONE_NUMBER = "+91 83406 23262";
 const WHATSAPP_NUMBER = "918340623262";

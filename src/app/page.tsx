@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MessageCircle, Layers, Star, ArrowRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 
 const WHATSAPP_NUMBER = "918340623262";
 

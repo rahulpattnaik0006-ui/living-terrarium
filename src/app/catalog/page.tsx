@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 
 const WHATSAPP_NUMBER = "918340623262";
 

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sun, Droplets, Thermometer, AlertCircle, MessageCircle } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 
 const WHATSAPP_NUMBER = "918340623262";
 
@@ -89,7 +89,7 @@ export default function CareGuidePage() {
             Long-term Thriving
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#f4f0e6]">
-            Caretaker's Manual
+            Caretaker&apos;s Manual
           </h1>
           <p className="text-xs text-[#b8ad96] mt-2 max-w-sm mx-auto leading-relaxed">
             Essential guidelines to keep your closed living biosphere thriving for years with practically zero maintenance.

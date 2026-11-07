@@ -110,6 +110,10 @@ export default function LivingTerrariumSite() {
             <div className="w-14 h-14 rounded-full bg-[#1a2517] border border-[#354c29] text-[#a4b893] flex items-center justify-center group-hover:scale-110 transition-transform"><BookOpen size={24} /></div>
             <span className="font-serif text-3xl font-bold text-[#f4f0e6]">Care Guide</span>
           </Link>
+          <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="group flex flex-col items-center gap-2">
+            <div className="w-14 h-14 rounded-full bg-[#1a2517] border border-[#354c29] text-[#a4b893] flex items-center justify-center group-hover:scale-110 transition-transform"><MessageCircle size={24} /></div>
+            <span className="font-serif text-3xl font-bold text-[#f4f0e6]">Contact</span>
+          </Link>
         </nav>
       </motion.div>
 

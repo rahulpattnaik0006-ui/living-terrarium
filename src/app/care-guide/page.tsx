@@ -1,129 +1,98 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Sun, Droplets, Wind, ShieldAlert, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Droplets, Sun, Wind, AlertCircle } from "lucide-react";
 
-const diagnosticIssues = [
+const careTips = [
   {
-    id: "foggy",
-    label: "Excessive Glass Condensation",
-    cause: "High internal temperature or excess water.",
-    solution: "Open the jar lid for 30–60 minutes in a cool room to allow humidity to normalize.",
+    icon: Droplets,
+    title: "Moisture & Watering",
+    description: "Closed terrariums self-recycle water. Only mist lightly once every 3 to 6 months if condensation on the glass completely disappears.",
   },
   {
-    id: "brown-moss",
-    label: "Moss Turning Pale or Brown",
-    cause: "Direct harsh sunlight causing scorch, or underwatered substrate.",
-    solution: "Move 3–4 feet away from direct window rays into bright indirect light. Give 2–3 light sprays of RO water.",
+    icon: Sun,
+    title: "Indirect Lighting",
+    description: "Place in bright, filtered ambient light. Never place in direct blazing sun, which will turn the glass bowl into a hot greenhouse.",
   },
   {
-    id: "mold",
-    label: "White Fuzzy Mold",
-    cause: "Stagnant humid air during early establishment.",
-    solution: "Wipe with a clean cotton bud and leave open for 45 minutes. Springtails will naturally digest remaining spores.",
+    icon: Wind,
+    title: "Ventilation Cycle",
+    description: "If heavy droplets cloud the glass for more than 2 days in a row, open the cork or lid for 2 hours to let excess humidity escape.",
+  },
+  {
+    icon: AlertCircle,
+    title: "Moss Maintenance",
+    description: "Trim brown tips or overgrowth with long aquascaping scissors once a year. Live pillow moss will naturally adjust to container humidity.",
   },
 ];
 
 export default function CareGuidePage() {
-  const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
-
-  const activeDiagnosis = diagnosticIssues.find((d) => d.id === selectedIssue);
-
   return (
-    <div className="min-h-screen bg-[#070b08] text-[#f2f7f3] px-4 py-6 max-w-md mx-auto">
-      {/* Top Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-[#f4f0e6] text-[#1c2517] min-h-screen font-sans">
+      <header className="sticky top-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b border-[#ded6c4] px-5 py-3.5 flex items-center justify-between">
         <Link
           href="/"
-          className="w-9 h-9 rounded-full bg-[#101712] border border-[#233526] flex items-center justify-center text-slate-300"
+          className="flex items-center gap-2 text-xs font-mono font-bold text-[#232f1e] hover:text-[#4d613e]"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={15} /> Back to Studio
         </Link>
-        <span className="font-serif text-sm tracking-wide lowercase text-slate-300">
-          care manual
+        <span className="font-serif tracking-wider text-xs uppercase font-bold text-[#172014]">
+          Living Terrarium
         </span>
-        <div className="w-9" />
-      </div>
+      </header>
 
-      <div className="mb-6">
-        <h1 className="font-serif text-2xl font-bold text-white mb-1">Ecosystem Longevity</h1>
-        <p className="text-xs text-slate-400">Rules for keeping closed and open jars thriving.</p>
-      </div>
-
-      {/* Core Rules Grid */}
-      <div className="space-y-3 mb-8">
-        <div className="p-4 rounded-xl border border-[#1b261d] bg-[#0c130e] flex items-start gap-3">
-          <Sun size={20} className="text-[#86efac] shrink-0 mt-0.5" />
-          <div>
-            <h3 className="font-bold text-sm text-white">Lighting (Indirect Only)</h3>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-              Never place sealed glass in direct noon sun—it creates an oven effect. Gentle morning light or ambient room lighting is ideal.
-            </p>
-          </div>
+      <main className="max-w-xl mx-auto px-5 py-10">
+        <div className="mb-8">
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#4d613e] font-semibold block mb-1">
+            Lifespan & Maintenance
+          </span>
+          <h1 className="font-serif text-3xl font-bold text-[#172014]">
+            Terrarium Care Protocol
+          </h1>
+          <p className="text-xs text-[#5c5445] mt-2 leading-relaxed">
+            A balanced enclosed biome requires under 5 minutes of care per month. Follow these rules to keep your moss and fittonias thriving for years.
+          </p>
         </div>
 
-        <div className="p-4 rounded-xl border border-[#1b261d] bg-[#0c130e] flex items-start gap-3">
-          <Droplets size={20} className="text-[#86efac] shrink-0 mt-0.5" />
-          <div>
-            <h3 className="font-bold text-sm text-white">Watering Frequency</h3>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-              Enclosed jars recycle their own moisture. They rarely need misting more than once every 2–4 months. Use distilled or RO water.
-            </p>
-          </div>
+        <div className="space-y-4 mb-10">
+          {careTips.map((tip, i) => {
+            const Icon = tip.icon;
+            return (
+              <div
+                key={i}
+                className="p-5 rounded-2xl border border-[#ded6c4] bg-[#faf7f2] shadow-sm flex gap-4"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#eae3d2] text-[#2c3a25] flex items-center justify-center shrink-0">
+                  <Icon size={20} />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-base text-[#172014] mb-1">
+                    {tip.title}
+                  </h3>
+                  <p className="text-xs text-[#453e32] leading-relaxed">
+                    {tip.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="p-4 rounded-xl border border-[#1b261d] bg-[#0c130e] flex items-start gap-3">
-          <Wind size={20} className="text-[#86efac] shrink-0 mt-0.5" />
-          <div>
-            <h3 className="font-bold text-sm text-white">Occasional Airing</h3>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-              Open the jar for 15 minutes once a month to replenish carbon dioxide and regulate pressure.
-            </p>
-          </div>
+        <div className="p-6 rounded-3xl bg-[#232f1e] text-[#f4f0e6] shadow-md text-center space-y-2">
+          <h3 className="font-serif text-xl font-bold">Need Personal Assistance?</h3>
+          <p className="text-xs text-[#d8cfbe] leading-relaxed max-w-sm mx-auto">
+            Send a quick photo of your jar on WhatsApp and we will diagnose the humidity balance for you.
+          </p>
+          <a
+            href="https://wa.me/918340623262?text=Hi!%20I%20have%20a%20question%20about%20my%20terrarium%20care."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-3 px-5 py-2.5 rounded-xl bg-[#f4f0e6] text-[#172014] font-mono text-xs font-bold hover:bg-[#eae3d2]"
+          >
+            Ask Artisan on WhatsApp →
+          </a>
         </div>
-      </div>
-
-      {/* Interactive Health Checker */}
-      <div className="rounded-2xl border border-[#233526] bg-[#0e1610] p-4 mb-12">
-        <div className="flex items-center gap-2 mb-2">
-          <ShieldAlert size={16} className="text-[#86efac]" />
-          <h2 className="font-serif font-bold text-sm text-white">Interactive Health Checker</h2>
-        </div>
-        <p className="text-[11px] text-slate-400 mb-3">
-          Tap a symptom to get immediate diagnostic advice:
-        </p>
-
-        <div className="space-y-2 mb-4">
-          {diagnosticIssues.map((issue) => (
-            <button
-              key={issue.id}
-              onClick={() => setSelectedIssue(issue.id === selectedIssue ? null : issue.id)}
-              className={`w-full text-left px-3 py-2.5 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
-                selectedIssue === issue.id
-                  ? "bg-[#22c55e] text-black font-bold"
-                  : "bg-[#141f17] border border-[#203124] text-slate-300"
-              }`}
-            >
-              <span>{issue.label}</span>
-              <span className="text-[10px]">{selectedIssue === issue.id ? "▲" : "▼"}</span>
-            </button>
-          ))}
-        </div>
-
-        {activeDiagnosis && (
-          <div className="p-3.5 rounded-xl bg-[#090f0b] border border-[#2d4634] space-y-2 text-xs">
-            <div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase">Cause</span>
-              <p className="text-slate-200 mt-0.5">{activeDiagnosis.cause}</p>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono text-[#86efac] uppercase">Treatment</span>
-              <p className="text-slate-100 font-medium mt-0.5">{activeDiagnosis.solution}</p>
-            </div>
-          </div>
-        )}
-      </div>
+      </main>
     </div>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageCircle, Star, Sparkles } from "lucide-react";
+import { MessageCircle, Star, Sparkles, BookOpen, Layers } from "lucide-react";
 import CommissionModal from "./components/CommissionModal";
 
 const WHATSAPP_NUMBER = "918340623262";
@@ -86,19 +87,29 @@ const reviews = [
 
 export default function LivingTerrariumSite() {
   const [modalOpen, setModalOpen] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
+  const heroTrackRef = useRef<HTMLDivElement>(null);
   const reviewsRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress: heroScroll } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
+  // Pinned Hero Scroll Progress (tracks across 220vh track)
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroTrackRef,
+    offset: ["start start", "end end"],
   });
 
-  const heroJarY = useTransform(heroScroll, [0, 1], ["0%", "28%"]);
-  const heroJarScale = useTransform(heroScroll, [0, 1], [1, 1.15]);
-  const heroTextY = useTransform(heroScroll, [0, 1], ["0%", "-45%"]);
-  const heroTextOpacity = useTransform(heroScroll, [0, 0.7], [1, 0]);
+  // Jar: Starts prominent (1.1x), diminishes down to 0.45x, and fades out cleanly
+  const jarScale = useTransform(heroProgress, [0, 0.7], [1.1, 0.45]);
+  const jarOpacity = useTransform(heroProgress, [0.4, 0.75], [1, 0]);
+  const jarY = useTransform(heroProgress, [0, 0.7], ["0%", "18%"]);
 
+  // Typography: Starts modest (0.85x), scales UP into a large bold statement (1.45x)
+  const textScale = useTransform(heroProgress, [0, 0.75], [0.85, 1.45]);
+  const textOpacity = useTransform(heroProgress, [0, 0.15, 0.8, 0.95], [0.85, 1, 1, 0.1]);
+  const textY = useTransform(heroProgress, [0, 0.75], ["0%", "-12%"]);
+
+  // Scroll prompt indicator fades away on initial scroll
+  const hintOpacity = useTransform(heroProgress, [0, 0.18], [1, 0]);
+
+  // Review parallax
   const { scrollYProgress: reviewScroll } = useScroll({
     target: reviewsRef,
     offset: ["start end", "end start"],
@@ -114,73 +125,105 @@ export default function LivingTerrariumSite() {
       {/* Scrollable Beige Curtain Layer */}
       <div className="relative z-10 bg-[#f4f0e6] shadow-[0_30px_70px_rgba(20,28,18,0.22)] mb-[400px] sm:mb-[360px] pb-16 border-b border-[#ded6c4]">
         
-        {/* Sticky Minimal Navbar */}
-        <header className="sticky top-0 z-40 bg-[#f4f0e6]/90 backdrop-blur-md border-b border-[#ded6c4] px-5 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+        {/* Sticky Multi-Page Navbar */}
+        <header className="sticky top-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b border-[#ded6c4] px-4 sm:px-6 py-3 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full border border-[#c8bea9] bg-[#eae3d2] overflow-hidden flex items-center justify-center">
               <img
                 src="/logo.png"
                 alt="Living Terrarium"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1545241047-6083a3684587?w=120&auto=format&fit=crop&q=80";
+                  (e.target as HTMLImageElement).src =
+                    "https://images.unsplash.com/photo-1545241047-6083a3684587?w=120&auto=format&fit=crop&q=80";
                 }}
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="font-serif tracking-wider text-xs uppercase font-bold text-[#1c2517]">
+            <span className="font-serif tracking-wider text-xs uppercase font-bold text-[#172014]">
               Living Terrarium
             </span>
-          </div>
+          </Link>
 
-          <a
-            href="https://www.instagram.com/living_terrarium/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#eae4d5] border border-[#d6cdbc] text-[#2c3a25] active:scale-95 transition-transform"
-          >
-            <InstagramIcon className="w-3.5 h-3.5" />
-            <span>@living_terrarium</span>
-          </a>
+          {/* Page Navigation Links */}
+          <nav className="flex items-center gap-1 sm:gap-2">
+            <Link
+              href="/catalog"
+              className="text-[11px] font-mono px-2.5 py-1.5 rounded-lg text-[#32432b] hover:bg-[#eae3d2] transition-colors flex items-center gap-1 font-semibold"
+            >
+              <Layers size={13} />
+              <span>Catalog</span>
+            </Link>
+
+            <Link
+              href="/care-guide"
+              className="text-[11px] font-mono px-2.5 py-1.5 rounded-lg text-[#32432b] hover:bg-[#eae3d2] transition-colors flex items-center gap-1 font-semibold"
+            >
+              <BookOpen size={13} />
+              <span>Care Guide</span>
+            </Link>
+
+            <a
+              href="https://www.instagram.com/living_terrarium/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="p-1.5 rounded-full bg-[#eae4d5] border border-[#d6cdbc] text-[#2c3a25] hover:bg-[#ded6c4] active:scale-95 transition-all ml-1"
+            >
+              <InstagramIcon className="w-3.5 h-3.5" />
+            </a>
+          </nav>
         </header>
 
-        {/* SECTION 1: HERO PARALLAX */}
-        <section ref={heroRef} className="relative h-[85vh] sm:h-screen flex flex-col items-center justify-center overflow-hidden px-4">
-          <div className="absolute w-72 h-72 rounded-full bg-[#495b3b]/12 blur-[110px] pointer-events-none -top-10" />
+        {/* SECTION 1: PINNED 3D HERO SCROLL */}
+        <section ref={heroTrackRef} className="relative h-[220vh]">
+          <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-4">
+            
+            <div className="absolute w-80 h-80 rounded-full bg-[#495b3b]/12 blur-[120px] pointer-events-none -top-10" />
 
-          <motion.div
-            style={{ y: heroTextY, opacity: heroTextOpacity }}
-            className="absolute z-0 text-center select-none pointer-events-none px-4"
-          >
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#4d613e] font-semibold block mb-2">
-              Bespoke Miniature Ecosystems
-            </span>
-            <h1 className="font-serif text-5xl sm:text-7xl font-bold tracking-tight text-[#172014] leading-[1.05]">
-              Find Peace <br />
-              <span className="italic font-normal text-[#4d613e]">in a jar.</span>
-            </h1>
-          </motion.div>
+            {/* Typography: Scales UP into focus without being covered */}
+            <motion.div
+              style={{ scale: textScale, opacity: textOpacity, y: textY }}
+              className="z-10 text-center select-none max-w-lg mb-4"
+            >
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#4d613e] font-semibold block mb-2">
+                Bespoke Miniature Ecosystems
+              </span>
+              <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[#172014] leading-[1.08]">
+                Find Peace <br />
+                <span className="italic font-normal text-[#4d613e]">in a jar.</span>
+              </h1>
+            </motion.div>
 
-          <motion.div
-            style={{ y: heroJarY, scale: heroJarScale }}
-            className="relative z-10 w-64 h-80 sm:w-80 sm:h-96 mt-20 flex items-center justify-center pointer-events-none"
-          >
-            <img
-              src="/hero-jar.png"
-              alt="Living Terrarium"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&auto=format&fit=crop&q=80";
-              }}
-              className="w-full h-full object-contain drop-shadow-[0_25px_45px_rgba(35,46,29,0.22)]"
-            />
-          </motion.div>
+            {/* Jar: Cleanly positioned below title; DIMINISHES as you scroll */}
+            <motion.div
+              style={{ scale: jarScale, opacity: jarOpacity, y: jarY }}
+              className="z-20 w-60 h-72 sm:w-72 sm:h-84 flex items-center justify-center pointer-events-none"
+            >
+              <img
+                src="/hero-jar.png"
+                alt="Living Terrarium"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&auto=format&fit=crop&q=80";
+                }}
+                className="w-full h-full object-contain drop-shadow-[0_20px_35px_rgba(35,46,29,0.22)]"
+              />
+            </motion.div>
 
-          <div className="absolute bottom-6 z-20 flex flex-col items-center gap-1.5 opacity-65">
-            <span className="text-[9px] font-mono uppercase tracking-widest text-[#696254]">Scroll to Explore</span>
-            <div className="w-1 h-5 rounded-full bg-[#394a2e]/60 animate-pulse" />
+            {/* Scroll Indicator */}
+            <motion.div
+              style={{ opacity: hintOpacity }}
+              className="absolute bottom-6 flex flex-col items-center gap-1.5"
+            >
+              <span className="text-[9px] font-mono uppercase tracking-widest text-[#787163]">
+                Scroll down to enter
+              </span>
+              <div className="w-1 h-5 rounded-full bg-[#394a2e]/60 animate-pulse" />
+            </motion.div>
           </div>
         </section>
 
-        {/* SECTION 2: CATALOG */}
+        {/* SECTION 2: CATALOG REVEAL */}
         <section className="px-5 py-12 max-w-xl mx-auto">
           <div className="flex items-end justify-between mb-4 border-b border-[#ded6c4] pb-4">
             <div>
@@ -189,10 +232,14 @@ export default function LivingTerrariumSite() {
               </span>
               <h2 className="font-serif text-2xl font-bold text-[#172014]">The Living Catalog</h2>
             </div>
-            <span className="text-[11px] font-mono text-[#787163]">4 Flagship Vessels</span>
+            <Link
+              href="/catalog"
+              className="text-[11px] font-mono text-[#4d613e] underline font-semibold hover:text-[#172014]"
+            >
+              View all →
+            </Link>
           </div>
 
-          {/* Custom Commission Button */}
           <button
             onClick={() => setModalOpen(true)}
             className="w-full mb-6 py-3 rounded-2xl bg-[#232f1e] hover:bg-[#32432b] text-[#f4f0e6] font-mono text-xs font-bold flex items-center justify-center gap-2 active:scale-98 transition-transform cursor-pointer shadow-md shadow-[#172014]/15"
@@ -319,7 +366,7 @@ export default function LivingTerrariumSite() {
 
       </div>
 
-      {/* SECTION 4: CONTACT (Dark Olive Curtain Reveal Footer) */}
+      {/* SECTION 4: DARK OLIVE CURTAIN FOOTER */}
       <footer className="fixed bottom-0 left-0 right-0 z-0 h-[400px] sm:h-[360px] bg-gradient-to-b from-[#1c2618] to-[#12190f] text-[#f4f0e6] px-6 py-8 flex flex-col justify-between max-w-xl mx-auto">
         <div>
           <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#cfc5b0] block mb-1">
@@ -347,17 +394,20 @@ export default function LivingTerrariumSite() {
             <span>→</span>
           </a>
 
-          <a
-            href="https://www.instagram.com/living_terrarium/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full py-3 px-4 rounded-2xl bg-[#283622] border border-[#3e5335] text-[#f4f0e6] font-mono text-xs flex items-center justify-between hover:bg-[#32432a] active:scale-98 transition-transform cursor-pointer"
-          >
-            <span className="flex items-center gap-2">
-              <InstagramIcon className="w-4 h-4 text-[#cfc5b0]" /> Follow @living_terrarium
-            </span>
-            <span className="text-[#a49a85]">↗</span>
-          </a>
+          <div className="flex gap-2">
+            <Link
+              href="/catalog"
+              className="flex-1 py-2.5 px-3 rounded-xl bg-[#283622] border border-[#3e5335] text-[#f4f0e6] font-mono text-xs flex items-center justify-center gap-1.5 hover:bg-[#32432a]"
+            >
+              <Layers size={13} /> Full Catalog
+            </Link>
+            <Link
+              href="/care-guide"
+              className="flex-1 py-2.5 px-3 rounded-xl bg-[#283622] border border-[#3e5335] text-[#f4f0e6] font-mono text-xs flex items-center justify-center gap-1.5 hover:bg-[#32432a]"
+            >
+              <BookOpen size={13} /> Care Guide
+            </Link>
+          </div>
         </div>
 
         <div className="flex items-center justify-between border-t border-[#2c3d25] pt-4 text-[10px] font-mono text-[#9f947f]">
@@ -366,7 +416,6 @@ export default function LivingTerrariumSite() {
         </div>
       </footer>
 
-      {/* Commission Configurator Modal */}
       <CommissionModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
 
     </div>

@@ -1,166 +1,124 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, MessageCircle, ExternalLink, Sparkles } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 
-interface Item {
-  id: string;
-  title: string;
-  category: "terrarium" | "paludarium" | "aquarium";
-  vessel: string;
-  dimensions: string;
-  price: string;
-  status: "Available" | "Commission Only";
-  image: string;
-  flora: string[];
-}
+const WHATSAPP_NUMBER = "918340623262";
 
-const items: Item[] = [
+const fullCatalog = [
   {
     id: "LT-01",
     title: "Zen Buddha Sanctuary",
-    category: "terrarium",
-    vessel: "Round Glass Orb",
-    dimensions: '8" x 8" Bowl',
+    type: "Enclosed Glass Bowl",
     price: "₹3,499",
-    status: "Available",
     image: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&auto=format&fit=crop&q=80",
-    flora: ["Cushion Moss", "Fittonia", "Porous Slate"],
+    flora: ["Cushion Moss", "Fittonia", "River Slate"],
   },
   {
     id: "LT-02",
-    title: "Living Luminary Table Lamp",
-    category: "terrarium",
-    vessel: "Cylindrical Lamp Vessel",
-    dimensions: '14" x 6" Column',
+    title: "The Living Luminary",
+    type: "Terrarium Table Lamp",
     price: "₹5,999",
-    status: "Commission Only",
     image: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=600&auto=format&fit=crop&q=80",
     flora: ["Java Moss", "Micro Ferns", "LED Habitat Light"],
   },
   {
     id: "LT-03",
-    title: "Misty Valley Paludarium",
-    category: "paludarium",
-    vessel: "Cube Glass Terrarium",
-    dimensions: '10" x 10" x 12"',
+    title: "Misty Falls Paludarium",
+    type: "Dual Biome Waterfall",
     price: "₹6,800",
-    status: "Commission Only",
     image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80",
-    flora: ["Anubias Nana", "Live Waterfall", "Lava Rocks"],
+    flora: ["Anubias Nana", "Lava Rocks", "Water Feature"],
   },
   {
     id: "LT-04",
-    title: "Iwagumi Nature Scape",
-    category: "aquarium",
-    vessel: "Ultra-Clear Rimless Tank",
-    dimensions: '12" x 8" x 10"',
-    price: "₹4,200",
-    status: "Available",
-    image: "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600&auto=format&fit=crop&q=80",
-    flora: ["Monte Carlo Carpet", "Seiryu Stones", "Aquatic Moss"],
+    title: "Miniature Path Jar",
+    type: "Apothecary Vessel",
+    price: "₹2,799",
+    image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&auto=format&fit=crop&q=80",
+    flora: ["Pillow Moss", "Couple Figurines", "Fine Sand Path"],
   },
 ];
 
 export default function CatalogPage() {
-  const [filter, setFilter] = useState<"all" | "terrarium" | "paludarium" | "aquarium">("all");
-
-  const filteredItems = filter === "all" ? items : items.filter((i) => i.category === filter);
-
   return (
-    <div className="min-h-screen bg-[#070b08] text-[#f2f7f3] px-4 py-6 max-w-md mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-[#f4f0e6] text-[#1c2517] min-h-screen font-sans">
+      <header className="sticky top-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b border-[#ded6c4] px-5 py-3.5 flex items-center justify-between">
         <Link
           href="/"
-          className="w-9 h-9 rounded-full bg-[#101712] border border-[#233526] flex items-center justify-center text-slate-300"
+          className="flex items-center gap-2 text-xs font-mono font-bold text-[#232f1e] hover:text-[#4d613e]"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={15} /> Back to Studio
         </Link>
-        <span className="font-serif text-sm tracking-wide lowercase text-slate-300">
-          build catalog
+        <span className="font-serif tracking-wider text-xs uppercase font-bold text-[#172014]">
+          Living Terrarium
         </span>
-        <div className="w-9" />
-      </div>
+      </header>
 
-      <div className="mb-6">
-        <h1 className="font-serif text-2xl font-bold text-white mb-1">Ecosystem Builds</h1>
-        <p className="text-xs text-slate-400">Handcrafted living biomes & custom commissions.</p>
-      </div>
+      <main className="max-w-xl mx-auto px-5 py-10">
+        <div className="mb-8">
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#4d613e] font-semibold block mb-1">
+            Complete Collection
+          </span>
+          <h1 className="font-serif text-3xl font-bold text-[#172014]">
+            All Flagship Vessels
+          </h1>
+          <p className="text-xs text-[#5c5445] mt-2 leading-relaxed">
+            Each creation is an autonomous living ecosystem handcrafted in small batches. Custom stone carvings and plant varieties available on commission.
+          </p>
+        </div>
 
-      {/* Filter Chips */}
-      <div className="flex gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
-        {(["all", "terrarium", "paludarium", "aquarium"] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setFilter(tab)}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer ${
-              filter === tab
-                ? "bg-[#22c55e] text-black font-bold"
-                : "bg-[#101712] border border-[#1e2a20] text-slate-300"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-
-      {/* Product List */}
-      <div className="space-y-4 pb-12">
-        {filteredItems.map((item) => (
-          <div
-            key={item.id}
-            className="rounded-2xl border border-[#1b261d] bg-[#0c130e] p-4 flex flex-col gap-3"
-          >
-            <div className="relative w-full h-52 rounded-xl overflow-hidden border border-[#233526]">
-              <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-              <span
-                className={`absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider font-semibold ${
-                  item.status === "Available"
-                    ? "bg-emerald-950/90 text-emerald-300 border border-emerald-700/50"
-                    : "bg-amber-950/90 text-amber-300 border border-amber-700/50"
-                }`}
-              >
-                {item.status}
-              </span>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <h3 className="font-serif font-bold text-base text-white">{item.title}</h3>
-                <span className="font-mono text-sm font-semibold text-[#86efac]">{item.price}</span>
-              </div>
-              <p className="text-[11px] font-mono text-slate-400 mt-0.5">
-                {item.vessel} • {item.dimensions}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5">
-              {item.flora.map((f, i) => (
-                <span
-                  key={i}
-                  className="px-2 py-0.5 rounded bg-[#131d16] border border-[#223326] text-[10px] text-slate-300 font-mono"
-                >
-                  {f}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href={`https://wa.me/?text=Hi!%20I%20am%20interested%20in%20commissioning%20the%20${encodeURIComponent(
-                item.title
-              )}%20(${item.id})`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 w-full py-2.5 rounded-xl bg-[#1b2b20] hover:bg-[#23382a] border border-[#2d4634] text-white text-xs font-mono font-medium flex items-center justify-center gap-2 active:scale-98 transition-transform"
+        <div className="grid grid-cols-1 gap-6">
+          {fullCatalog.map((item) => (
+            <div
+              key={item.id}
+              className="rounded-3xl border border-[#ded6c4] bg-[#faf7f2] p-4 shadow-sm"
             >
-              <MessageCircle size={14} className="text-[#86efac]" />
-              Inquire on WhatsApp
-            </a>
-          </div>
-        ))}
-      </div>
+              <div className="relative w-full h-56 rounded-2xl overflow-hidden border border-[#ded6c4] mb-4 bg-[#eae3d2]">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#172014]/80 backdrop-blur-md text-[10px] font-mono text-[#f4f0e6] border border-[#3b4b32]">
+                  {item.type}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-serif font-bold text-lg text-[#172014]">
+                  {item.title}
+                </h3>
+                <span className="font-mono text-base font-bold text-[#2d3d24]">
+                  {item.price}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {item.flora.map((tag, i) => (
+                  <span
+                    key={i}
+                    className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#eae3d2] text-[#2d3a26] border border-[#ded6c4]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20am%20interested%20in%20commissioning%20the%20${encodeURIComponent(
+                  item.title
+                )}%20(${item.id})`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl bg-[#232f1e] hover:bg-[#34462c] text-[#f4f0e6] text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
+              >
+                <MessageCircle size={14} /> Commission on WhatsApp
+              </a>
+            </div>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

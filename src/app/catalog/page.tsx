@@ -38,35 +38,148 @@ function FloatingParticle({ type, size }: { type: string; size: string }) {
   return <div className={`${size} border border-[#e8dfcf]/25 bg-[#e8dfcf]/10`} />;
 }
 
+// 1. TERRARIUMS (17 Builds with Custom Titles & Subtitles)
 const terrariumList = [
-  { id: "T-01", title: "Vertical Archway Vivarium", file: "03", tags: ["Display Cabinet", "Live Moss", "Wood Arch"] },
-  { id: "T-02", title: "Spherical Moss Garden", file: "05", tags: ["Glass Orb", "Fittonia", "Pebble Path"] },
-  { id: "T-03", title: "Dual Spire Jars", file: "06", tags: ["Twin Vials", "Pillow Moss", "Lichen"] },
-  { id: "T-04", title: "Slanted Couple Biome", file: "07", tags: ["Slanted Bowl", "Couple Figurine", "Sand Trail"] },
-  { id: "T-05", title: "Boy & Girl Miniature Jar", file: "08", tags: ["Apothecary Jar", "Figurines", "Micro Flora"] },
-  { id: "T-06", title: "Verdant Stroll Path", file: "09", tags: ["Sealed Vessel", "Couple Figurine", "Cushion Moss"] },
-  { id: "T-07", title: "Zen Monk Sanctuary", file: "10", tags: ["Tall Glass", "Buddha Figurine", "Forest Moss"] },
-  { id: "T-08", title: "Tall Stone Stairway", file: "11", tags: ["Staircase Drift", "Micro Ferns", "Slate"] },
-  { id: "T-09", title: "Companion Apothecaries", file: "12", tags: ["Twin Jars", "Lava Rock", "Live Moss"] },
-  { id: "T-10", title: "Ancient Staircase Globe", file: "13", tags: ["Slanted Globe", "Stone Steps", "Riverbed"] },
-  { id: "T-11", title: "White Sand Waterfall", file: "14", tags: ["Rope-tied Vessel", "Sand Fall", "Live Moss"] },
-  { id: "T-12", title: "Layered Soil Pillar", file: "15", tags: ["Clear Cylinder", "Soil Strata", "Fittonia"] },
-  { id: "T-13", title: "Spiderwood Forest Bowl", file: "16", tags: ["Wide Bowl", "Twisted Hardscape", "Lush Carpet"] },
-  { id: "T-14", title: "Woodland Canopy Jar", file: "17", tags: ["Cork Jar", "Driftwood", "Moss"] },
-  { id: "T-15", title: "Terraced Bridge Sanctum", file: "T04", tags: ["Wide Orb", "Miniature Bridge", "Pebble Bed"] },
-  { id: "T-16", title: "Rainforest Display Cabinet", file: "TERRARIUM01", tags: ["Large Tank", "Jungle Drift", "Canopy"] },
-  { id: "T-17", title: "Ganesha Floral Sanctum", file: "TERRARIUM02", tags: ["Slanted Bowl", "Ganesha Idol", "Sacred Garden"] },
+  {
+    id: "T-01",
+    title: "Secret Garden Gate",
+    subtitle: "A hidden wooden door invites you into a secret world of moss and stone.",
+    file: "03",
+  },
+  {
+    id: "T-02",
+    title: "Mossy Woodland Path",
+    subtitle: "A winding pebble trail bordered by rich cushion moss and miniature ferns.",
+    file: "05",
+  },
+  {
+    id: "T-03",
+    title: "Forest Canopy Dome",
+    subtitle: "Dense tropical foliage enclosed within a crystal-clear curved glass cloche.",
+    file: "06",
+  },
+  {
+    id: "T-04",
+    title: "Mountain Mist Valley",
+    subtitle: "Rugged miniature stone cliffs draped in delicate greenery and trailing vines.",
+    file: "07",
+  },
+  {
+    id: "T-05",
+    title: "Enchanted Hollow",
+    subtitle: "An ancient gnarled root cradling a lush understory of vibrant living moss.",
+    file: "08",
+  },
+  {
+    id: "T-06",
+    title: "Riverbed Oasis",
+    subtitle: "Smooth river stones flowing through a dense bed of miniature botanical life.",
+    file: "09",
+  },
+  {
+    id: "T-07",
+    title: "Emerald Highlands",
+    subtitle: "Steep mossy slopes capturing the serene essence of a tranquil alpine forest.",
+    file: "10",
+  },
+  {
+    id: "T-08",
+    title: "Whispering Fern Glen",
+    subtitle: "Delicate fern fronds unfurling amidst weathered stone and rich forest loam.",
+    file: "11",
+  },
+  {
+    id: "T-09",
+    title: "Ancient Bonsai Shire",
+    subtitle: "A weathered miniature trunk standing guard over a carpet of lush greenery.",
+    file: "12",
+  },
+  {
+    id: "T-10",
+    title: "Twilight Glade",
+    subtitle: "A shadowed woodland nook accented with deep green textures and earthy elements.",
+    file: "13",
+  },
+  {
+    id: "T-11",
+    title: "White Sand Waterfall",
+    subtitle: "A tropical oasis featuring a cascade of pure white sand beneath a miniature wooden bridge.",
+    file: "14",
+  },
+  {
+    id: "T-12",
+    title: "Layered Soil Spire",
+    subtitle: "A tall cylindrical vessel showcasing geological earth strata supporting vibrant greenery.",
+    file: "15",
+  },
+  {
+    id: "T-13",
+    title: "Spiderwood Forest Bowl",
+    subtitle: "Twisted spiderwood branches arching gracefully across a lush mossy floor.",
+    file: "16",
+  },
+  {
+    id: "T-14",
+    title: "Forest Fawn Haven",
+    subtitle: "A delicate woodland fawn resting peacefully in a carpet of miniature forest flora.",
+    file: "17",
+  },
+  {
+    id: "T-15",
+    title: "Terraced Bridge Sanctum",
+    subtitle: "A serene miniature landscape featuring a hand-crafted bridge over a pebble riverbed.",
+    file: "T04",
+  },
+  {
+    id: "T-16",
+    title: "Emerald Sanctuary",
+    subtitle: "A thriving slice of primeval jungle housed in an expansive display cabinet.",
+    file: "TERRARIUM01",
+  },
+  {
+    id: "T-17",
+    title: "Ganesha's Sacred Grove",
+    subtitle: "A harmonious display where lush greenery frames a peaceful deity.",
+    file: "TERRARIUM02",
+  },
 ];
 
+// 2. PALUDARIUMS (3 Builds with Custom Titles & Subtitles)
 const paludariumList = [
-  { id: "P-01", title: "Riparium Planted Tank", file: "03", tags: ["Submerged Flora", "Emergent Plants", "Living Water"] },
-  { id: "P-02", title: "Bromeliad Glow Jar", file: "PAULADIUR02", tags: ["Atmospheric Jar", "Mini Bromeliad", "Grow Light"] },
-  { id: "P-03", title: "Neon Mist Vivarium", file: "PAULDARIUM01", tags: ["LED Spectral Light", "Active Misting", "Jungle Flora"] },
+  {
+    id: "P-01",
+    title: "Mist & Margin",
+    subtitle: "An evocative display bridging aquatic life and emergent shoreline vegetation.",
+    file: "03",
+  },
+  {
+    id: "P-02",
+    title: "Luminous Bromeliad Haven",
+    subtitle: "A radiant miniature ecosystem centered around a glowing tropical centerpiece.",
+    file: "PAULADIUR02",
+  },
+  {
+    id: "P-03",
+    title: "Neon Flora Fusion",
+    subtitle: "A vibrant underwater landscape illuminated by striking colored light.",
+    file: "PAULDARIUM01",
+  },
 ];
 
+// 3. AQUARIUMS (2 Builds with Custom Titles & Subtitles)
 const aquariumList = [
-  { id: "A-01", title: "Planted Nano Aquarium", file: "02", tags: ["Fine Sand Base", "Lava Rock Hide", "Aquatic Stem Flora"] },
-  { id: "A-02", title: "Zen Lotus Stone Basin", file: "A01", tags: ["Ceramic Basin", "Emergent Flora", "Stepping Stones"] },
+  {
+    id: "A-01",
+    title: "Verdant Microcosm",
+    subtitle: "A flourishing underwater scene captured in a compact glass vessel.",
+    file: "02",
+  },
+  {
+    id: "A-02",
+    title: "Serene Basin Garden",
+    subtitle: "A meditative arrangement combining natural stone and harmonious foliage.",
+    file: "A01",
+  },
 ];
 
 export default function CatalogPage() {
@@ -145,7 +258,7 @@ export default function CatalogPage() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="flex flex-col items-center"
               >
-                {/* CARD CONTAINER WITH MODIFIED BASE-COLOR ACCENT BORDER */}
+                {/* IMAGE CONTAINER WITH BASE ACCENT BORDER */}
                 <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] bg-[#0c120a] rounded-2xl border-2 border-[#3d5134] ring-1 ring-[#ded6c4]/25 p-3.5 flex items-center justify-center shadow-[inset_0_0_0_3px_#141c12,0_16px_36px_rgba(0,0,0,0.55)] group">
                   <img
                     src={`/terrarium/${item.file}.png`}
@@ -165,13 +278,12 @@ export default function CatalogPage() {
                   </span>
                 </div>
 
+                {/* TITLE & SUBTITLE */}
                 <div className="w-full mt-4 text-center">
                   <h3 className="font-serif font-bold text-xl text-[#f4f0e6] mb-1.5">{item.title}</h3>
-                  <div className="flex flex-wrap justify-center gap-1.5 mb-3.5">
-                    {item.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#1b2618] text-[#b8ad96] border border-[#2b3a25]">{tag}</span>
-                    ))}
-                  </div>
+                  <p className="font-serif italic text-xs sm:text-sm text-[#b8ad96] max-w-sm mx-auto leading-relaxed mb-3.5">
+                    "{item.subtitle}"
+                  </p>
 
                   <a
                     href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20am%20interested%20in%20commissioning%20the%20${encodeURIComponent(item.title)}%20(${item.id})`}
@@ -226,11 +338,9 @@ export default function CatalogPage() {
 
                 <div className="w-full mt-4 text-center">
                   <h3 className="font-serif font-bold text-xl text-[#f4f0e6] mb-1.5">{item.title}</h3>
-                  <div className="flex flex-wrap justify-center gap-1.5 mb-3.5">
-                    {item.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#1b2618] text-[#b8ad96] border border-[#2b3a25]">{tag}</span>
-                    ))}
-                  </div>
+                  <p className="font-serif italic text-xs sm:text-sm text-[#b8ad96] max-w-sm mx-auto leading-relaxed mb-3.5">
+                    "{item.subtitle}"
+                  </p>
 
                   <a
                     href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20am%20interested%20in%20commissioning%20the%20${encodeURIComponent(item.title)}%20(${item.id})`}
@@ -285,11 +395,9 @@ export default function CatalogPage() {
 
                 <div className="w-full mt-4 text-center">
                   <h3 className="font-serif font-bold text-xl text-[#f4f0e6] mb-1.5">{item.title}</h3>
-                  <div className="flex flex-wrap justify-center gap-1.5 mb-3.5">
-                    {item.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#1b2618] text-[#b8ad96] border border-[#2b3a25]">{tag}</span>
-                    ))}
-                  </div>
+                  <p className="font-serif italic text-xs sm:text-sm text-[#b8ad96] max-w-sm mx-auto leading-relaxed mb-3.5">
+                    "{item.subtitle}"
+                  </p>
 
                   <a
                     href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20am%20interested%20in%20commissioning%20the%20${encodeURIComponent(item.title)}%20(${item.id})`}

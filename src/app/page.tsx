@@ -174,7 +174,7 @@ export default function LivingTerrariumSite() {
             <span className="text-[11px] font-mono text-slate-500">4 Flagship Vessels</span>
           </div>
 
-          {/* Custom Commission Modal Trigger Button */}
+          {/* Custom Commission Button */}
           <button
             onClick={() => setModalOpen(true)}
             className="w-full mb-6 py-3 rounded-2xl bg-gradient-to-r from-[#142318] to-[#1c3322] border border-[#2d4d34] text-[#86efac] font-mono text-xs font-bold flex items-center justify-center gap-2 active:scale-98 transition-transform cursor-pointer shadow-lg shadow-black/40"
@@ -348,7 +348,7 @@ export default function LivingTerrariumSite() {
         </div>
       </footer>
 
-      {/* Custom Commission Configurator Modal */}
+      {/* Commission Configurator Modal */}
       <CommissionModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
 
     </div>

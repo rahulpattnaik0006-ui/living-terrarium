@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowLeft, MessageCircle, Quote, Heart, Layers, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
+import { MessageCircle, Quote, Heart } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const WHATSAPP_NUMBER = "918340623262";
 
@@ -30,7 +30,6 @@ function FloatingParticle({ type, size }: { type: string; size: string }) {
   return <div className={`${size} border border-[#e8dfcf]/20 bg-[#e8dfcf]/10`} />;
 }
 
-// 8 Verified Reviews (Quote + Photo only - No names, No stars)
 const quotesOnly = [
   {
     id: "Q-01",
@@ -78,12 +77,8 @@ export default function CustomerReviewsPage() {
   const handleReviewImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>, file: string) => {
     const target = e.currentTarget;
     const currentSrc = target.src;
-    if (currentSrc.endsWith(".jpg")) {
-      target.src = `/reviews/${file}.jpeg`;
-    } else if (currentSrc.endsWith(".jpeg")) {
-      target.src = `/reviews/${file}.png`;
-    } else if (currentSrc.endsWith(".png")) {
-      target.src = `/reviews/${file}.JPG`;
+    if (currentSrc.endsWith(".png")) {
+      target.src = `/reviews/${file}.jpg`;
     } else {
       target.src = "https://images.unsplash.com/photo-1545241047-6083a3684587?w=500&auto=format&fit=crop&q=80";
     }
@@ -92,7 +87,10 @@ export default function CustomerReviewsPage() {
   return (
     <div className="bg-[#121a11] text-[#f4f0e6] min-h-screen font-sans selection:bg-[#344828] selection:text-[#f4f0e6] relative overflow-hidden">
       
-      {/* FLOATING BEIGE GEOMETRY */}
+      {/* 1. UNIVERSAL NAVBAR */}
+      <Navbar currentPage="reviews" />
+
+      {/* 2. FLOATING BEIGE GEOMETRY */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         {floatingGeometries.map((item, idx) => (
           <div key={idx} style={{ top: item.top, left: item.left }} className="absolute">
@@ -106,23 +104,14 @@ export default function CustomerReviewsPage() {
         ))}
       </div>
 
-      {/* MOBILE-FRIENDLY HEADER */}
-      <header className="sticky top-0 z-40 bg-[#121a11]/90 backdrop-blur-md border-b border-[#283824] px-4 sm:px-6 py-2.5 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#b2c8a2] hover:text-[#f4f0e6]">
-          <ArrowLeft size={14} /> Studio
-        </Link>
-        <nav className="flex items-center gap-2">
-          <Link href="/catalog" className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#202e1c] border border-[#3b5033] text-[#b2c8a2] flex items-center gap-1">
-            <Layers size={11} /> Catalog
-          </Link>
-          <Link href="/care-guide" className="text-[11px] font-mono px-2 py-1 text-[#b2c8a2] hover:text-[#f4f0e6] flex items-center gap-1">
-            <BookOpen size={11} /> Care
-          </Link>
-        </nav>
-      </header>
-
-      <main className="max-w-xl mx-auto px-5 py-8 relative z-10">
-        <div className="text-center mb-10">
+      <main className="max-w-xl mx-auto px-5 pt-24 pb-12 relative z-10">
+        
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
+        >
           <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#a1bb90] font-bold block mb-1.5">
             Living Proof
           </span>
@@ -132,26 +121,30 @@ export default function CustomerReviewsPage() {
           <p className="text-xs text-[#b8ad96] mt-2 max-w-sm mx-auto leading-relaxed">
             Real caretaker setups photographed inside homes and desks across India.
           </p>
-        </div>
+        </motion.div>
 
-        {/* REVIEWS LIST: PHOTO + QUOTE ONLY */}
+        {/* REVIEWS LIST: REFINED BORDER + SCROLL MOTION */}
         <div className="space-y-8">
           {quotesOnly.map((rev) => (
-            <div
+            <motion.div
               key={rev.id}
-              className="rounded-3xl border-2 border-[#2c3d25] bg-[#162014]/90 backdrop-blur-md p-4 sm:p-5 shadow-[0_12px_32px_rgba(0,0,0,0.55)] flex flex-col sm:flex-row gap-4 items-center"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-3xl border-2 border-[#33462b] ring-1 ring-[#ded6c4]/20 bg-gradient-to-b from-[#182316] to-[#121910] p-4 sm:p-5 shadow-[0_16px_36px_rgba(0,0,0,0.55)] flex flex-col sm:flex-row gap-4 items-center"
             >
-              {/* Photo Frame (supports all ratios without distortion) */}
-              <div className="relative w-36 h-48 sm:w-40 sm:h-52 bg-[#0c120c] rounded-2xl border-2 border-[#384c30] p-1.5 shrink-0 flex items-center justify-center shadow-[inset_0_0_0_3px_#121a11]">
+              {/* Photo Frame */}
+              <div className="relative w-36 h-48 sm:w-40 sm:h-52 bg-[#0c120c] rounded-2xl border-2 border-[#3d5134] ring-1 ring-[#ded6c4]/15 p-1.5 shrink-0 flex items-center justify-center shadow-[inset_0_0_0_3px_#121a11]">
                 <img
-                  src={`/reviews/${rev.file}.jpg`}
+                  src={`/reviews/${rev.file}.png`}
                   alt="Customer Terrarium"
                   onError={(e) => handleReviewImgError(e, rev.file)}
                   className="max-w-full max-h-full w-auto h-auto object-contain rounded-xl"
                 />
               </div>
 
-              {/* Quote Content Only */}
+              {/* Quote Content */}
               <div className="flex-1 text-center sm:text-left flex flex-col justify-center">
                 <Quote size={20} className="text-[#a1bb90]/60 mb-2 mx-auto sm:mx-0 -scale-x-100" />
                 <p className="font-serif italic text-sm sm:text-base text-[#f4f0e6] leading-relaxed">
@@ -162,12 +155,17 @@ export default function CustomerReviewsPage() {
                   <span>100% Closed Biome</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* BOTTOM COMMUNITY PROMPT */}
-        <div className="mt-14 p-6 rounded-3xl bg-[#182316] border border-[#2f4227] text-center space-y-2.5">
+        {/* BOTTOM PROMPT */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mt-14 p-6 rounded-3xl bg-[#182316] border border-[#2f4227] ring-1 ring-[#ded6c4]/15 text-center space-y-2.5"
+        >
           <Heart size={18} className="text-[#a1bb90] mx-auto fill-current" />
           <h3 className="font-serif text-lg font-bold text-[#f4f0e6]">Have a Living Terrarium?</h3>
           <p className="text-xs text-[#b8ad96] max-w-xs mx-auto">
@@ -181,7 +179,8 @@ export default function CustomerReviewsPage() {
           >
             <MessageCircle size={14} /> Send Photo via WhatsApp
           </a>
-        </div>
+        </motion.div>
+
       </main>
     </div>
   );

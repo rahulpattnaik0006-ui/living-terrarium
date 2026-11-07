@@ -1,23 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MessageCircle, Menu, X, Layers, Star, BookOpen, ArrowRight } from "lucide-react";
+import { MessageCircle, Layers, Star, ArrowRight } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const WHATSAPP_NUMBER = "918340623262";
 
-function InstagramIcon({ className = "w-5 h-5" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-    </svg>
-  );
-}
-
-// Background filler element
 function BotanicalOliveLeaf({ className = "w-10 h-16", opacity = "opacity-40" }: { className?: string; opacity?: string }) {
   return (
     <svg viewBox="0 0 80 140" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" className={`${className} ${opacity}`}>
@@ -63,64 +52,16 @@ const biomes = [
 ];
 
 export default function LivingTerrariumSite() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <div className="bg-[#f4f0e6] text-[#1c2517] font-sans selection:bg-[#354c29] selection:text-[#f4f0e6]">
       
-      {/* 1. CLEAN NAVBAR (Hamburger Only) */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 flex items-center justify-between pointer-events-none">
-        <Link href="/" className="flex items-center gap-2.5 pointer-events-auto group">
-          <div className="w-10 h-10 rounded-full border border-[#c8bea9] bg-[#eae3d2] overflow-hidden flex items-center justify-center shadow-lg transition-transform group-hover:scale-105">
-            <img src="/logo.png" alt="Living Terrarium" className="w-full h-full object-cover" />
-          </div>
-          <span className="font-serif tracking-widest text-sm uppercase font-bold text-[#172014] bg-[#f4f0e6]/90 px-3 py-1 rounded-full backdrop-blur-md border border-[#ded6c4] shadow-sm">
-            Living Terrarium
-          </span>
-        </Link>
+      {/* 1. UNIVERSAL NAVBAR (Identical across every page) */}
+      <Navbar currentPage="home" />
 
-        <button 
-          onClick={() => setIsMenuOpen(true)}
-          className="w-11 h-11 rounded-full bg-[#172014] text-[#f4f0e6] flex items-center justify-center pointer-events-auto shadow-xl hover:bg-[#2b3a25] transition-colors"
-        >
-          <Menu size={20} />
-        </button>
-      </header>
-
-      {/* FULL SCREEN MENU */}
-      <motion.div 
-        initial={false}
-        animate={{ y: isMenuOpen ? "0%" : "-100%", opacity: isMenuOpen ? 1 : 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed inset-0 z-[60] bg-[#121910]/95 backdrop-blur-2xl flex flex-col justify-center items-center"
-      >
-        <button onClick={() => setIsMenuOpen(false)} className="absolute top-5 right-5 w-12 h-12 rounded-full border border-[#354c29] bg-[#1a2517] text-[#a4b893] flex items-center justify-center hover:bg-[#2d3e23] transition-colors">
-          <X size={24} />
-        </button>
-        <nav className="flex flex-col items-center gap-8 text-center">
-          <Link href="/catalog" onClick={() => setIsMenuOpen(false)} className="group flex flex-col items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-[#1a2517] border border-[#354c29] text-[#a4b893] flex items-center justify-center group-hover:scale-110 transition-transform"><Layers size={24} /></div>
-            <span className="font-serif text-3xl font-bold text-[#f4f0e6]">Catalog</span>
-          </Link>
-          <Link href="/reviews" onClick={() => setIsMenuOpen(false)} className="group flex flex-col items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-[#1a2517] border border-[#354c29] text-[#a4b893] flex items-center justify-center group-hover:scale-110 transition-transform"><Star size={24} /></div>
-            <span className="font-serif text-3xl font-bold text-[#f4f0e6]">Reviews</span>
-          </Link>
-          <Link href="/care-guide" onClick={() => setIsMenuOpen(false)} className="group flex flex-col items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-[#1a2517] border border-[#354c29] text-[#a4b893] flex items-center justify-center group-hover:scale-110 transition-transform"><BookOpen size={24} /></div>
-            <span className="font-serif text-3xl font-bold text-[#f4f0e6]">Care Guide</span>
-          </Link>
-          <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="group flex flex-col items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-[#1a2517] border border-[#354c29] text-[#a4b893] flex items-center justify-center group-hover:scale-110 transition-transform"><MessageCircle size={24} /></div>
-            <span className="font-serif text-3xl font-bold text-[#f4f0e6]">Contact</span>
-          </Link>
-        </nav>
-      </motion.div>
-
-      {/* 2. MASSIVE HERO SECTION (Zero Empty Space) */}
+      {/* 2. MASSIVE HERO SECTION */}
       <section className="relative w-full min-h-[95vh] sm:min-h-screen bg-[#f4f0e6] pt-28 pb-10 flex flex-col overflow-hidden">
         
-        {/* Huge Background Leaves to fill void */}
+        {/* Background Leaves */}
         <BotanicalOliveLeaf className="absolute -top-10 -right-20 w-[400px] h-[600px] text-[#e3dac5] rotate-45 opacity-60 z-0" />
         <BotanicalOliveLeaf className="absolute top-[40%] -left-32 w-[350px] h-[500px] text-[#e3dac5] -rotate-12 opacity-60 z-0" />
 
@@ -137,10 +78,10 @@ export default function LivingTerrariumSite() {
           </p>
         </div>
 
-        {/* Hero Jar - ENLARGED to fill the entire bottom half */}
+        {/* Hero Jar */}
         <div className="relative z-10 w-full flex-1 flex justify-center items-end mt-4 px-2">
           <motion.img
-            initial={{ y: 100, opacity: 0 }}
+            initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             src="/hero-jar.png"
@@ -150,15 +91,20 @@ export default function LivingTerrariumSite() {
         </div>
       </section>
 
-      {/* 3. VERTICAL FULL-BLEED BIOMES (No empty spaces, huge images) */}
+      {/* 3. VERTICAL FULL-BLEED BIOMES */}
       <div className="w-full">
         {biomes.map((item, idx) => (
-          <section key={item.num} className={`relative w-full px-4 sm:px-8 py-12 sm:py-20 ${item.bg} ${item.text} flex flex-col lg:flex-row items-center gap-8 lg:gap-16 overflow-hidden`}>
+          <section key={item.num} className={`relative w-full px-4 sm:px-8 py-14 sm:py-20 ${item.bg} ${item.text} flex flex-col lg:flex-row items-center gap-8 lg:gap-16 overflow-hidden`}>
             
-            {/* Background Texture Filler */}
             <BotanicalOliveLeaf className={`absolute top-0 right-0 w-[500px] h-[500px] opacity-10 rotate-90 pointer-events-none ${item.accent}`} />
 
-            <div className="w-full lg:w-1/2 flex flex-col z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="w-full lg:w-1/2 flex flex-col z-10"
+            >
               <span className={`text-xs font-mono uppercase tracking-widest font-bold mb-3 ${item.accent}`}>
                 Phase {item.num} // {item.tag}
               </span>
@@ -173,13 +119,13 @@ export default function LivingTerrariumSite() {
                 <span>Explore Catalog</span>
                 <ArrowRight size={18} />
               </Link>
-            </div>
+            </motion.div>
 
-            {/* ENLARGED VERTICAL PICTURE */}
+            {/* ENLARGED PICTURE CONTAINER */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6 }}
               className="w-full lg:w-1/2 relative z-10"
             >
@@ -190,7 +136,6 @@ export default function LivingTerrariumSite() {
                     alt={item.title}
                     className="absolute inset-0 w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700"
                   />
-                  {/* Internal tag to kill any dead space on the image */}
                   <div className="absolute bottom-4 right-4 backdrop-blur-md bg-black/40 border border-white/20 px-4 py-2 rounded-xl">
                     <span className="font-mono text-[10px] uppercase text-white tracking-widest">Available Now</span>
                   </div>
@@ -202,7 +147,7 @@ export default function LivingTerrariumSite() {
         ))}
       </div>
 
-      {/* 4. FOOTER: REMAINS EXACTLY THE SAME AS REQUESTED */}
+      {/* 4. FOOTER */}
       <footer className="relative z-20 bg-gradient-to-b from-[#182315] to-[#0c120a] text-[#f4f0e6] px-6 py-12 border-t border-[#2d3f26]">
         <div className="max-w-xl mx-auto flex flex-col justify-between gap-8">
           <div className="text-center">

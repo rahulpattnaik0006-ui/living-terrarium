@@ -1,97 +1,152 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowLeft, Droplets, Sun, Wind, AlertCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Sun, Droplets, Thermometer, AlertCircle, MessageCircle } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
-const careTips = [
-  {
-    icon: Droplets,
-    title: "Moisture & Watering",
-    description: "Closed terrariums self-recycle water. Only mist lightly once every 3 to 6 months if condensation on the glass completely disappears.",
-  },
+const WHATSAPP_NUMBER = "918340623262";
+
+const floatingGeometries = [
+  { top: "6%", left: "8%", type: "diamond", size: "w-3 h-3", delay: 0 },
+  { top: "14%", left: "90%", type: "cross", size: "w-3.5 h-3.5", delay: 1.1 },
+  { top: "28%", left: "12%", type: "ring", size: "w-4 h-4", delay: 2.3 },
+  { top: "45%", left: "86%", type: "diamond", size: "w-3 h-3", delay: 0.8 },
+  { top: "62%", left: "8%", type: "cross", size: "w-3.5 h-3.5", delay: 1.6 },
+  { top: "78%", left: "92%", type: "ring", size: "w-4 h-4", delay: 2.1 },
+];
+
+function FloatingParticle({ type, size }: { type: string; size: string }) {
+  if (type === "diamond") return <div className={`${size} rotate-45 border border-[#e8dfcf]/25 bg-[#e8dfcf]/10`} />;
+  if (type === "ring") return <div className={`${size} rounded-full border border-[#e8dfcf]/25`} />;
+  if (type === "cross") {
+    return (
+      <div className={`${size} relative flex items-center justify-center`}>
+        <span className="absolute w-full h-[1px] bg-[#e8dfcf]/30" />
+        <span className="absolute h-full w-[1px] bg-[#e8dfcf]/30" />
+      </div>
+    );
+  }
+  return <div className={`${size} border border-[#e8dfcf]/20 bg-[#e8dfcf]/10`} />;
+}
+
+const careCards = [
   {
     icon: Sun,
-    title: "Indirect Lighting",
-    description: "Place in bright, filtered ambient light. Never place in direct blazing sun, which will turn the glass bowl into a hot greenhouse.",
+    title: "Light Requirements",
+    rule: "Bright Indirect Light Only",
+    desc: "Keep within 3 to 6 feet of an east- or north-facing window, or under a gentle desk lamp. Never place under harsh direct afternoon sunlight, as enclosed glass magnifies heat rapidly.",
   },
   {
-    icon: Wind,
-    title: "Ventilation Cycle",
-    description: "If heavy droplets cloud the glass for more than 2 days in a row, open the cork or lid for 2 hours to let excess humidity escape.",
+    icon: Droplets,
+    title: "Watering & Humidity",
+    rule: "Once Every 2–4 Months",
+    desc: "A closed terrarium recycles its own moisture through condensation. Light condensation in the morning is healthy. Only mist with 3–4 sprays of distilled water if no condensation forms for weeks.",
+  },
+  {
+    icon: Thermometer,
+    title: "Ideal Climate",
+    rule: "18°C – 28°C",
+    desc: "Living mosses and ferns thrive in standard room conditions. Keep vessels safely away from direct air conditioner vents, heat blowers, or hot electronics.",
   },
   {
     icon: AlertCircle,
-    title: "Moss Maintenance",
-    description: "Trim brown tips or overgrowth with long aquascaping scissors once a year. Live pillow moss will naturally adjust to container humidity.",
+    title: "Maintenance & Mold Check",
+    rule: "Zero Regular Trimming",
+    desc: "If heavy droplets run continuously down the glass, open the lid for 20–30 minutes to balance humidity. Gently trim any dead leaf tips using clean tweezers.",
   },
 ];
 
 export default function CareGuidePage() {
   return (
-    <div className="bg-[#f4f0e6] text-[#1c2517] min-h-screen font-sans">
-      <header className="sticky top-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b border-[#ded6c4] px-5 py-3.5 flex items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-xs font-mono font-bold text-[#232f1e] hover:text-[#4d613e]"
+    <div className="bg-[#121a11] text-[#f4f0e6] min-h-screen font-sans selection:bg-[#344828] selection:text-[#f4f0e6] relative overflow-hidden">
+      
+      {/* 1. UNIVERSAL NAVBAR */}
+      <Navbar currentPage="care" />
+
+      {/* 2. FLOATING GEOMETRY */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {floatingGeometries.map((item, idx) => (
+          <div key={idx} style={{ top: item.top, left: item.left }} className="absolute">
+            <motion.div
+              animate={{ y: [0, -18, 0], x: [0, idx % 2 === 0 ? 8 : -8, 0], rotate: [0, 45, 0] }}
+              transition={{ duration: 7 + (idx % 3), repeat: Infinity, ease: "easeInOut", delay: item.delay }}
+            >
+              <FloatingParticle type={item.type} size={item.size} />
+            </motion.div>
+          </div>
+        ))}
+      </div>
+
+      <main className="max-w-xl mx-auto px-5 pt-28 pb-14 relative z-10">
+        
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
         >
-          <ArrowLeft size={15} /> Back to Studio
-        </Link>
-        <span className="font-serif tracking-wider text-xs uppercase font-bold text-[#172014]">
-          Living Terrarium
-        </span>
-      </header>
-
-      <main className="max-w-xl mx-auto px-5 py-10">
-        <div className="mb-8">
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#4d613e] font-semibold block mb-1">
-            Lifespan & Maintenance
+          <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#a1bb90] font-bold block mb-2">
+            Long-term Thriving
           </span>
-          <h1 className="font-serif text-3xl font-bold text-[#172014]">
-            Terrarium Care Protocol
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#f4f0e6]">
+            Caretaker's Manual
           </h1>
-          <p className="text-xs text-[#5c5445] mt-2 leading-relaxed">
-            A balanced enclosed biome requires under 5 minutes of care per month. Follow these rules to keep your moss and fittonias thriving for years.
+          <p className="text-xs text-[#b8ad96] mt-2 max-w-sm mx-auto leading-relaxed">
+            Essential guidelines to keep your closed living biosphere thriving for years with practically zero maintenance.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="space-y-4 mb-10">
-          {careTips.map((tip, i) => {
-            const Icon = tip.icon;
+        {/* CARE CARDS WITH FRAMER MOTION SCROLL */}
+        <div className="space-y-6">
+          {careCards.map((card, i) => {
+            const Icon = card.icon;
             return (
-              <div
-                key={i}
-                className="p-5 rounded-2xl border border-[#ded6c4] bg-[#faf7f2] shadow-sm flex gap-4"
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}
+                className="p-5 rounded-3xl bg-[#162014] border-2 border-[#33462b] ring-1 ring-[#ded6c4]/20 shadow-xl"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#eae3d2] text-[#2c3a25] flex items-center justify-center shrink-0">
-                  <Icon size={20} />
+                <div className="flex items-center gap-3.5 mb-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#202e1c] text-[#a1bb90] flex items-center justify-center shrink-0 border border-[#354c29]">
+                    <Icon size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-bold text-lg text-[#f4f0e6] leading-tight">{card.title}</h3>
+                    <span className="text-[10px] font-mono text-[#a1bb90] uppercase tracking-wider">{card.rule}</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-serif font-bold text-base text-[#172014] mb-1">
-                    {tip.title}
-                  </h3>
-                  <p className="text-xs text-[#453e32] leading-relaxed">
-                    {tip.description}
-                  </p>
-                </div>
-              </div>
+                <p className="text-xs text-[#b8ad96] leading-relaxed mt-2 pl-1">
+                  {card.desc}
+                </p>
+              </motion.div>
             );
           })}
         </div>
 
-        <div className="p-6 rounded-3xl bg-[#232f1e] text-[#f4f0e6] shadow-md text-center space-y-2">
-          <h3 className="font-serif text-xl font-bold">Need Personal Assistance?</h3>
-          <p className="text-xs text-[#d8cfbe] leading-relaxed max-w-sm mx-auto">
-            Send a quick photo of your jar on WhatsApp and we will diagnose the humidity balance for you.
+        {/* WHATSAPP SUPPORT CTA */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mt-12 p-6 rounded-3xl bg-[#182316] border border-[#2f4227] ring-1 ring-[#ded6c4]/15 text-center space-y-2.5"
+        >
+          <h3 className="font-serif text-lg font-bold text-[#f4f0e6]">Need Diagnosis for Your Jar?</h3>
+          <p className="text-xs text-[#b8ad96] max-w-xs mx-auto">
+            Send us a clear photograph of your moss setup on WhatsApp and our studio artisan will guide you directly.
           </p>
           <a
-            href="https://wa.me/918340623262?text=Hi!%20I%20have%20a%20question%20about%20my%20terrarium%20care."
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20have%20a%20question%20about%20caring%20for%20my%20Living%20Terrarium.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-3 px-5 py-2.5 rounded-xl bg-[#f4f0e6] text-[#172014] font-mono text-xs font-bold hover:bg-[#eae3d2]"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#f4f0e6] text-[#121a11] text-xs font-mono font-bold mt-2 shadow-md hover:bg-[#eae3d2]"
           >
-            Ask Artisan on WhatsApp →
+            <MessageCircle size={15} /> Consult on WhatsApp
           </a>
-        </div>
+        </motion.div>
+
       </main>
     </div>
   );

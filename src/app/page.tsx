@@ -7,7 +7,6 @@ import CommissionModal from "./components/CommissionModal";
 
 const WHATSAPP_NUMBER = "918340623262";
 
-// Built-in inline SVG icon for Instagram
 function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg
@@ -110,15 +109,15 @@ export default function LivingTerrariumSite() {
   const card3Y = useTransform(reviewScroll, [0, 1], [20, -20]);
 
   return (
-    <div className="bg-[#050806] text-[#f2f7f3] min-h-screen font-sans selection:bg-[#22c55e] selection:text-black">
+    <div className="bg-[#172014] text-[#1c2517] min-h-screen font-sans selection:bg-[#3a4b30] selection:text-[#f5f2e9]">
       
-      {/* Scrollable Body (Curtain Layer) */}
-      <div className="relative z-10 bg-[#070b08] shadow-[0_30px_70px_rgba(0,0,0,0.95)] mb-[400px] sm:mb-[360px] pb-16 border-b border-[#18261b]">
+      {/* Scrollable Beige Curtain Layer */}
+      <div className="relative z-10 bg-[#f4f0e6] shadow-[0_30px_70px_rgba(20,28,18,0.22)] mb-[400px] sm:mb-[360px] pb-16 border-b border-[#ded6c4]">
         
         {/* Sticky Minimal Navbar */}
-        <header className="sticky top-0 z-40 bg-[#070b08]/80 backdrop-blur-md border-b border-[#18261b]/60 px-5 py-3.5 flex items-center justify-between">
+        <header className="sticky top-0 z-40 bg-[#f4f0e6]/90 backdrop-blur-md border-b border-[#ded6c4] px-5 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full border border-[#4d7c55]/40 bg-[#101712] overflow-hidden flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full border border-[#c8bea9] bg-[#eae3d2] overflow-hidden flex items-center justify-center">
               <img
                 src="/logo.png"
                 alt="Living Terrarium"
@@ -128,7 +127,7 @@ export default function LivingTerrariumSite() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="font-serif tracking-wider text-xs uppercase font-bold text-slate-200">
+            <span className="font-serif tracking-wider text-xs uppercase font-bold text-[#1c2517]">
               Living Terrarium
             </span>
           </div>
@@ -137,7 +136,7 @@ export default function LivingTerrariumSite() {
             href="https://www.instagram.com/living_terrarium/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#111a13] border border-[#233526] text-[#86efac] active:scale-95 transition-transform"
+            className="flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#eae4d5] border border-[#d6cdbc] text-[#2c3a25] active:scale-95 transition-transform"
           >
             <InstagramIcon className="w-3.5 h-3.5" />
             <span>@living_terrarium</span>
@@ -146,18 +145,18 @@ export default function LivingTerrariumSite() {
 
         {/* SECTION 1: HERO PARALLAX */}
         <section ref={heroRef} className="relative h-[85vh] sm:h-screen flex flex-col items-center justify-center overflow-hidden px-4">
-          <div className="absolute w-72 h-72 rounded-full bg-[#22c55e]/10 blur-[100px] pointer-events-none -top-10" />
+          <div className="absolute w-72 h-72 rounded-full bg-[#495b3b]/12 blur-[110px] pointer-events-none -top-10" />
 
           <motion.div
             style={{ y: heroTextY, opacity: heroTextOpacity }}
             className="absolute z-0 text-center select-none pointer-events-none px-4"
           >
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#86efac] block mb-2">
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#4d613e] font-semibold block mb-2">
               Bespoke Miniature Ecosystems
             </span>
-            <h1 className="font-serif text-5xl sm:text-7xl font-bold tracking-tight text-white leading-[1.05]">
+            <h1 className="font-serif text-5xl sm:text-7xl font-bold tracking-tight text-[#172014] leading-[1.05]">
               Find Peace <br />
-              <span className="italic font-normal text-[#86efac]/80">in a jar.</span>
+              <span className="italic font-normal text-[#4d613e]">in a jar.</span>
             </h1>
           </motion.div>
 
@@ -171,33 +170,34 @@ export default function LivingTerrariumSite() {
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&auto=format&fit=crop&q=80";
               }}
-              className="w-full h-full object-contain drop-shadow-[0_25px_45px_rgba(34,197,94,0.22)]"
+              className="w-full h-full object-contain drop-shadow-[0_25px_45px_rgba(35,46,29,0.22)]"
             />
           </motion.div>
 
-          <div className="absolute bottom-6 z-20 flex flex-col items-center gap-1.5 opacity-60">
-            <span className="text-[9px] font-mono uppercase tracking-widest text-slate-400">Scroll to Explore</span>
-            <div className="w-1 h-5 rounded-full bg-[#22c55e]/50 animate-pulse" />
+          <div className="absolute bottom-6 z-20 flex flex-col items-center gap-1.5 opacity-65">
+            <span className="text-[9px] font-mono uppercase tracking-widest text-[#696254]">Scroll to Explore</span>
+            <div className="w-1 h-5 rounded-full bg-[#394a2e]/60 animate-pulse" />
           </div>
         </section>
 
         {/* SECTION 2: CATALOG */}
         <section className="px-5 py-12 max-w-xl mx-auto">
-          <div className="flex items-end justify-between mb-4 border-b border-[#1b261d] pb-4">
+          <div className="flex items-end justify-between mb-4 border-b border-[#ded6c4] pb-4">
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#86efac] block mb-1">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#4d613e] font-semibold block mb-1">
                 Handcrafted Inventory
               </span>
-              <h2 className="font-serif text-2xl font-bold text-white">The Living Catalog</h2>
+              <h2 className="font-serif text-2xl font-bold text-[#172014]">The Living Catalog</h2>
             </div>
-            <span className="text-[11px] font-mono text-slate-500">4 Flagship Vessels</span>
+            <span className="text-[11px] font-mono text-[#787163]">4 Flagship Vessels</span>
           </div>
 
+          {/* Custom Commission Button */}
           <button
             onClick={() => setModalOpen(true)}
-            className="w-full mb-6 py-3 rounded-2xl bg-gradient-to-r from-[#142318] to-[#1c3322] border border-[#2d4d34] text-[#86efac] font-mono text-xs font-bold flex items-center justify-center gap-2 active:scale-98 transition-transform cursor-pointer shadow-lg shadow-black/40"
+            className="w-full mb-6 py-3 rounded-2xl bg-[#232f1e] hover:bg-[#32432b] text-[#f4f0e6] font-mono text-xs font-bold flex items-center justify-center gap-2 active:scale-98 transition-transform cursor-pointer shadow-md shadow-[#172014]/15"
           >
-            <Sparkles size={15} />
+            <Sparkles size={15} className="text-[#d8cfbe]" />
             <span>Design a Custom Commission</span>
           </button>
 
@@ -210,31 +210,31 @@ export default function LivingTerrariumSite() {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 whileTap={{ scale: 0.98 }}
-                className="group rounded-3xl border border-[#1d2a1f] bg-[#0c130e]/80 backdrop-blur-md p-4 transition-all duration-300 hover:border-[#38533c] hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+                className="group rounded-3xl border border-[#ded6c4] bg-[#faf7f2] p-4 transition-all duration-300 hover:border-[#b8ac95] hover:shadow-lg shadow-sm"
               >
-                <div className="relative w-full h-56 rounded-2xl overflow-hidden border border-[#213123] mb-4 bg-[#080d09]">
+                <div className="relative w-full h-56 rounded-2xl overflow-hidden border border-[#ded6c4] mb-4 bg-[#eae3d2]">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-[#86efac] border border-[#2a3d2e]">
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#172014]/80 backdrop-blur-md text-[10px] font-mono text-[#f4f0e6] border border-[#3b4b32]">
                     {item.type}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-serif font-bold text-lg text-white group-hover:text-[#86efac] transition-colors">
+                  <h3 className="font-serif font-bold text-lg text-[#172014] group-hover:text-[#384a2d] transition-colors">
                     {item.title}
                   </h3>
-                  <span className="font-mono text-base font-bold text-[#86efac]">{item.price}</span>
+                  <span className="font-mono text-base font-bold text-[#2d3d24]">{item.price}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {item.flora.map((tag, i) => (
                     <span
                       key={i}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#131d15] text-slate-300 border border-[#203023]"
+                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#eae3d2] text-[#2d3a26] border border-[#ded6c4]"
                     >
                       {tag}
                     </span>
@@ -247,7 +247,7 @@ export default function LivingTerrariumSite() {
                   )}%20(${item.id})`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 rounded-xl bg-[#162319] hover:bg-[#22c55e] hover:text-black border border-[#273a2b] text-slate-200 text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-[#232f1e] hover:bg-[#34462c] text-[#f4f0e6] text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
                 >
                   <MessageCircle size={14} />
                   Commission on WhatsApp
@@ -260,58 +260,58 @@ export default function LivingTerrariumSite() {
         {/* SECTION 3: REVIEWS */}
         <section ref={reviewsRef} className="px-5 py-12 max-w-xl mx-auto overflow-hidden">
           <div className="text-center mb-10">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#86efac] block mb-1">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#4d613e] font-semibold block mb-1">
               Verified Collectors
             </span>
-            <h2 className="font-serif text-2xl font-bold text-white">Words From Caretakers</h2>
+            <h2 className="font-serif text-2xl font-bold text-[#172014]">Words From Caretakers</h2>
           </div>
 
           <div className="space-y-4">
             <motion.div
               style={{ y: card1Y }}
-              className="p-5 rounded-2xl border border-[#223526] bg-[#0d140f]/90 backdrop-blur-md shadow-[0_20px_40px_rgba(0,0,0,0.7)]"
+              className="p-5 rounded-2xl border border-[#ded6c4] bg-[#faf7f2] shadow-sm"
             >
-              <div className="flex items-center gap-1 text-amber-400 mb-2">
+              <div className="flex items-center gap-1 text-[#9b7e3b] mb-2">
                 {[...Array(reviews[0].stars)].map((_, i) => (
                   <Star key={i} size={13} fill="currentColor" />
                 ))}
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed mb-3">"{reviews[0].comment}"</p>
-              <div className="flex items-center justify-between text-[11px] font-mono border-t border-[#1a291d] pt-2.5 text-slate-400">
-                <span className="text-white font-bold">{reviews[0].name} ({reviews[0].city})</span>
-                <span className="text-[#86efac]">{reviews[0].build}</span>
+              <p className="text-xs text-[#383329] leading-relaxed mb-3">"{reviews[0].comment}"</p>
+              <div className="flex items-center justify-between text-[11px] font-mono border-t border-[#ded6c4] pt-2.5 text-[#6c6556]">
+                <span className="text-[#172014] font-bold">{reviews[0].name} ({reviews[0].city})</span>
+                <span className="text-[#435636] font-semibold">{reviews[0].build}</span>
               </div>
             </motion.div>
 
             <motion.div
               style={{ y: card2Y }}
-              className="p-5 rounded-2xl border border-[#283e2d] bg-[#101913]/90 backdrop-blur-md shadow-[0_25px_50px_rgba(0,0,0,0.85)]"
+              className="p-5 rounded-2xl border border-[#ded6c4] bg-[#faf7f2] shadow-sm"
             >
-              <div className="flex items-center gap-1 text-amber-400 mb-2">
+              <div className="flex items-center gap-1 text-[#9b7e3b] mb-2">
                 {[...Array(reviews[1].stars)].map((_, i) => (
                   <Star key={i} size={13} fill="currentColor" />
                 ))}
               </div>
-              <p className="text-xs text-slate-200 leading-relaxed mb-3">"{reviews[1].comment}"</p>
-              <div className="flex items-center justify-between text-[11px] font-mono border-t border-[#1a291d] pt-2.5 text-slate-400">
-                <span className="text-white font-bold">{reviews[1].name} ({reviews[1].city})</span>
-                <span className="text-[#86efac]">{reviews[1].build}</span>
+              <p className="text-xs text-[#383329] leading-relaxed mb-3">"{reviews[1].comment}"</p>
+              <div className="flex items-center justify-between text-[11px] font-mono border-t border-[#ded6c4] pt-2.5 text-[#6c6556]">
+                <span className="text-[#172014] font-bold">{reviews[1].name} ({reviews[1].city})</span>
+                <span className="text-[#435636] font-semibold">{reviews[1].build}</span>
               </div>
             </motion.div>
 
             <motion.div
               style={{ y: card3Y }}
-              className="p-5 rounded-2xl border border-[#223526] bg-[#0d140f]/90 backdrop-blur-md shadow-[0_20px_40px_rgba(0,0,0,0.7)]"
+              className="p-5 rounded-2xl border border-[#ded6c4] bg-[#faf7f2] shadow-sm"
             >
-              <div className="flex items-center gap-1 text-amber-400 mb-2">
+              <div className="flex items-center gap-1 text-[#9b7e3b] mb-2">
                 {[...Array(reviews[2].stars)].map((_, i) => (
                   <Star key={i} size={13} fill="currentColor" />
                 ))}
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed mb-3">"{reviews[2].comment}"</p>
-              <div className="flex items-center justify-between text-[11px] font-mono border-t border-[#1a291d] pt-2.5 text-slate-400">
-                <span className="text-white font-bold">{reviews[2].name} ({reviews[2].city})</span>
-                <span className="text-[#86efac]">{reviews[2].build}</span>
+              <p className="text-xs text-[#383329] leading-relaxed mb-3">"{reviews[2].comment}"</p>
+              <div className="flex items-center justify-between text-[11px] font-mono border-t border-[#ded6c4] pt-2.5 text-[#6c6556]">
+                <span className="text-[#172014] font-bold">{reviews[2].name} ({reviews[2].city})</span>
+                <span className="text-[#435636] font-semibold">{reviews[2].build}</span>
               </div>
             </motion.div>
           </div>
@@ -319,17 +319,17 @@ export default function LivingTerrariumSite() {
 
       </div>
 
-      {/* SECTION 4: CONTACT (Curtain Reveal Footer) */}
-      <footer className="fixed bottom-0 left-0 right-0 z-0 h-[400px] sm:h-[360px] bg-gradient-to-b from-[#09110b] to-[#040605] px-6 py-8 flex flex-col justify-between max-w-xl mx-auto">
+      {/* SECTION 4: CONTACT (Dark Olive Curtain Reveal Footer) */}
+      <footer className="fixed bottom-0 left-0 right-0 z-0 h-[400px] sm:h-[360px] bg-gradient-to-b from-[#1c2618] to-[#12190f] text-[#f4f0e6] px-6 py-8 flex flex-col justify-between max-w-xl mx-auto">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#86efac] block mb-1">
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#cfc5b0] block mb-1">
             Start Your Commission
           </span>
-          <h2 className="font-serif text-3xl font-bold text-white leading-tight">
+          <h2 className="font-serif text-3xl font-bold text-[#f4f0e6] leading-tight">
             Bring Nature <br />
-            <span className="italic font-normal text-[#86efac]">Into Your Space.</span>
+            <span className="italic font-normal text-[#cfc5b0]">Into Your Space.</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-2 max-w-xs leading-relaxed">
+          <p className="text-xs text-[#b8ad96] mt-2 max-w-xs leading-relaxed">
             Custom vessel sizes, customized figurines, and corporate bulk gifting available.
           </p>
         </div>
@@ -339,7 +339,7 @@ export default function LivingTerrariumSite() {
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi!%20I%20would%20like%20to%20discuss%20a%20custom%20terrarium%20order.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3 px-4 rounded-2xl bg-[#22c55e] text-black font-mono font-bold text-xs flex items-center justify-between shadow-lg shadow-green-950/50 active:scale-98 transition-transform cursor-pointer"
+            className="w-full py-3 px-4 rounded-2xl bg-[#f4f0e6] text-[#172014] font-mono font-bold text-xs flex items-center justify-between shadow-lg shadow-black/30 hover:bg-[#eae3d2] active:scale-98 transition-transform cursor-pointer"
           >
             <span className="flex items-center gap-2">
               <MessageCircle size={16} /> Direct WhatsApp Inquiry
@@ -351,16 +351,16 @@ export default function LivingTerrariumSite() {
             href="https://www.instagram.com/living_terrarium/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3 px-4 rounded-2xl bg-[#111c13] border border-[#243827] text-slate-200 font-mono text-xs flex items-center justify-between active:scale-98 transition-transform cursor-pointer"
+            className="w-full py-3 px-4 rounded-2xl bg-[#283622] border border-[#3e5335] text-[#f4f0e6] font-mono text-xs flex items-center justify-between hover:bg-[#32432a] active:scale-98 transition-transform cursor-pointer"
           >
             <span className="flex items-center gap-2">
-              <InstagramIcon className="w-4 h-4 text-[#86efac]" /> Follow @living_terrarium
+              <InstagramIcon className="w-4 h-4 text-[#cfc5b0]" /> Follow @living_terrarium
             </span>
-            <span className="text-slate-500">↗</span>
+            <span className="text-[#a49a85]">↗</span>
           </a>
         </div>
 
-        <div className="flex items-center justify-between border-t border-[#19261b] pt-4 text-[10px] font-mono text-slate-500">
+        <div className="flex items-center justify-between border-t border-[#2c3d25] pt-4 text-[10px] font-mono text-[#9f947f]">
           <span>Living Terrarium Studio</span>
           <span>Find peace in a jar</span>
         </div>
